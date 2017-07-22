@@ -4576,11 +4576,7 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
-"mime-db@>= 1.27.0 < 2":
-  version "1.29.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.29.0.tgz#48d26d235589651704ac5916ca06001914266878"
-
-mime-db@~1.27.0:
+"mime-db@>= 1.27.0 < 2", mime-db@~1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.27.0.tgz#820f572296bbd20ec25ed55e5b5de869e5436eb1"
 
@@ -6713,9 +6709,9 @@ ts-loader@^2.2.2:
     loader-utils "^1.0.2"
     semver "^5.0.1"
 
-tscomp@0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/tscomp/-/tscomp-0.13.1.tgz#fd8d1fdc5331ab93987528387535d5f9cd9d6e75"
+tscomp@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/tscomp/-/tscomp-0.13.2.tgz#14706e72522179839d7a6b315f8cc4e876cb2c9f"
   dependencies:
     autoprefixer "^7.1.1"
     babel-core "^6.25.0"
