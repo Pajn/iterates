@@ -1,0 +1,32 @@
+{
+  "name": "iterates",
+  "version": "0.1.0",
+  "author": "Rasmus Eneman <rasmus@eneman.eu>",
+  "repository": "Pajn/iterates",
+  "dependencies": {
+    "@types/webpack": "^3.0.4",
+    "auto-curry": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.4",
+    "coveralls": "^2.13.1",
+    "prettier": "^1.5.3",
+    "tscomp": "0.13.1"
+  },
+  "tscomp": {
+    "mode": "lib"
+  },
+  "scripts": {
+    "build": "tscomp build",
+    "test": "tscomp test",
+    "eject": "tscomp eject",
+    "watch": "tscomp watch",
+    "prepack": "tscomp build",
+    "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
+    "report-coverage": "cat coverage/lcov.info | coveralls"
+  },
+  "main": "./cjs/index.js",
+  "module": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "license": "BSD-3-Clause"
+}

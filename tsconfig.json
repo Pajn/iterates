@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "declaration": true,
+    "target": "es2015",
+    "module": "es2015",
+    "lib": ["dom", "es5", "es2015", "es2016", "esnext.asynciterable"],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": ".",
+    "outDir": "lib"
+  },
+  "include": ["src/**/*", "typings/**/*"],
+  "exclude": ["node_modules/**/*"]
+}
