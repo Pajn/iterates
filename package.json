@@ -4,7 +4,11 @@
   "version": "0.1.0",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": "Pajn/iterates",
-  "keywords": ["iterator", "async", "typescript"],
+  "keywords": [
+    "iterator",
+    "async",
+    "typescript"
+  ],
   "dependencies": {
     "@types/webpack": "^3.0.4",
     "auto-curry": "^0.2.1"
@@ -13,7 +17,9 @@
     "@types/jest": "^20.0.4",
     "coveralls": "^2.13.1",
     "prettier": "^1.5.3",
-    "tscomp": "^0.13.2"
+    "tscomp": "^0.13.2",
+    "tslint": "^5.5.0",
+    "tslint-config-pajn": "^1.0.0"
   },
   "tscomp": {
     "mode": "lib"
