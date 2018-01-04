@@ -1,4 +1,5 @@
 import * as subject from './async'
+import {Awaitable} from './async'
 
 if (typeof Symbol.asyncIterator === 'undefined') {
   ;(Symbol as any).asyncIterator = Symbol()
@@ -66,12 +67,48 @@ describe('async', () => {
     })
   })
 
+  describe('filterMap', () => {
+    it('should apply the provided function over each item and flatten it', async () => {
+      const iterator = subject
+        .filterMap(
+          item => (item.length === 3 ? item.toUpperCase() : undefined),
+          asAsync('one', 'two', 'three'),
+        )
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'ONE',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'TWO',
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should be auto curried', async () => {
+      const iterator = subject.filterMap(
+        (item: string) => (item.length === 3 ? item.toUpperCase() : undefined),
+      )(asAsync('one', 'two', 'three'))[Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'ONE',
+      })
+    })
+  })
+
   describe('flatMap', () => {
     it('should apply the provided function over each item and flatten it', async () => {
       const iterator = subject
         .flatMap(
-          item => asAsync(item, item.toUpperCase()),
-          asAsync('one', 'two', 'three'),
+          item =>
+            asAsync<Awaitable<string>>(
+              item,
+              Promise.resolve(item.toUpperCase()),
+            ),
+          asAsync<Awaitable<string>>('one', Promise.resolve('two'), 'three'),
         )
         [Symbol.asyncIterator]()
 
@@ -112,6 +149,78 @@ describe('async', () => {
         value: 'one',
       })
     })
+  })
+
+  describe('flatten', () => {
+    it('should flatten the items', async () => {
+      const iterator = subject
+        .flatten(
+          asAsync(
+            asAsync<number | string>(1, 'one'),
+            asAsync<number | string>(2, 'two'),
+            asAsync<number | string>(3, 'three'),
+          ),
+        )
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    // it('should suport sync iterables', async () => {
+    //   const iterator = subject
+    //     .flatten(asAsync([1, 'one'], [2, 'two'], [3, 'three']))
+    //     [Symbol.asyncIterator]()
+
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 1,
+    //   })
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 'one',
+    //   })
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 2,
+    //   })
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 'two',
+    //   })
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 3,
+    //   })
+    //   expect(await iterator.next()).toEqual({
+    //     done: false,
+    //     value: 'three',
+    //   })
+    //   expect(await iterator.next()).toEqual({done: true, value: undefined})
+    // })
   })
 
   describe('filter', () => {

@@ -1,14 +1,10 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": "Pajn/iterates",
-  "keywords": [
-    "iterator",
-    "async",
-    "typescript"
-  ],
+  "keywords": ["iterator", "async", "typescript"],
   "dependencies": {
     "@types/webpack": "^3.0.4",
     "auto-curry": "^0.2.1"

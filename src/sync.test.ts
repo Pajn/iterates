@@ -1,6 +1,6 @@
 import * as subject from './sync'
 
-describe('async', () => {
+describe('sync', () => {
   describe('enumerate', () => {
     it('should add the index to each element', () => {
       const iterator = subject
@@ -58,6 +58,38 @@ describe('async', () => {
     })
   })
 
+  describe('filterMap', () => {
+    it('should apply the provided function over each item and flatten it', () => {
+      const iterator = subject
+        .filterMap(
+          item => (item.length === 3 ? item.toUpperCase() : undefined),
+          ['one', 'two', 'three'],
+        )
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'ONE',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'TWO',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should be auto curried', () => {
+      const iterator = subject.filterMap(
+        (item: string) => (item.length === 3 ? item.toUpperCase() : undefined),
+      )(['one', 'two', 'three'])[Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'ONE',
+      })
+    })
+  })
+
   describe('flatMap', () => {
     it('should apply the provided function over each item and flatten it', () => {
       const iterator = subject
@@ -101,6 +133,40 @@ describe('async', () => {
         done: false,
         value: 'one',
       })
+    })
+  })
+
+  describe('flatten', () => {
+    it('should apply flatten the items', () => {
+      const iterator = subject
+        .flatten([[1, 'one'], [2, 'two'], [3, 'three']])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
     })
   })
 
@@ -227,6 +293,14 @@ describe('async', () => {
       const item = subject.last([])
 
       expect(item).toEqual(undefined)
+    })
+  })
+
+  describe('sort', () => {
+    it('should return a sorted array', () => {
+      const items = subject.sort((a, b) => a - b, [2, 1, 3])
+
+      expect(items).toEqual([1, 2, 3])
     })
   })
 })
