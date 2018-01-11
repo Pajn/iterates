@@ -4,7 +4,12 @@
   "version": "0.2.0",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": "Pajn/iterates",
-  "keywords": ["iterator", "async", "typescript"],
+  "homepage": "https://pajn.github.io/iterates",
+  "keywords": [
+    "iterator",
+    "async",
+    "typescript"
+  ],
   "dependencies": {
     "@types/webpack": "^3.0.4",
     "auto-curry": "^0.2.1"
@@ -12,6 +17,9 @@
   "devDependencies": {
     "@types/jest": "^20.0.4",
     "coveralls": "^2.13.1",
+    "documittu": "^0.2.28",
+    "documittu-analyzer-ts": "^0.2.28",
+    "documittu-template-default": "^0.2.28",
     "prettier": "^1.5.3",
     "tscomp": "^0.13.2",
     "tslint": "^5.5.0",
@@ -27,7 +35,10 @@
     "watch": "tscomp watch",
     "prepack": "tscomp build",
     "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
-    "report-coverage": "cat coverage/lcov.info | coveralls"
+    "report-coverage": "cat coverage/lcov.info | coveralls",
+    "docs": "yarn docs-analyze && documittu build",
+    "docs-dev": "documittu start",
+    "docs-analyze": "documittu-analyzer-ts . > docs/analyze-result.json"
   },
   "main": "./cjs/index.js",
   "module": "./lib/index.js",
