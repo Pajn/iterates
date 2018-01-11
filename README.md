@@ -1,4 +1,5 @@
 # iterates
+[![Build Status](https://travis-ci.org/Pajn/iterates.svg?branch=master)](https://travis-ci.org/Pajn/iterates)
 
 Iterates provides common collection functions like filter and map for both syncronous and asyncronous iterators.
 

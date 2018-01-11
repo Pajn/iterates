@@ -1,6 +1,109 @@
 import * as subject from './sync'
 
 describe('sync', () => {
+  describe('range', () => {
+    it('should count from start to end', () => {
+      const iterator = subject.range({start: 0, end: 3})[Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 0,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(iterator.next()).toEqual({done: true, value: 3})
+    })
+
+    it('should count from start to end with negative step value', () => {
+      const iterator = subject
+        .range({start: 3, end: 0, step: -1})
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(iterator.next()).toEqual({done: true, value: 0})
+    })
+
+    it('should stop on overshooting step values', () => {
+      const positiveIterator = subject
+        .range({start: 0, end: 3, step: 2})
+        [Symbol.iterator]()
+      const negativeIterator = subject
+        .range({start: 3, end: 0, step: -2})
+        [Symbol.iterator]()
+
+      expect(positiveIterator.next()).toEqual({
+        done: false,
+        value: 0,
+      })
+      expect(positiveIterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(positiveIterator.next()).toEqual({done: true, value: 4})
+      expect(negativeIterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(negativeIterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(negativeIterator.next()).toEqual({done: true, value: -1})
+    })
+
+    it('should support infinite ranges', () => {
+      const iterator = subject.range({start: 3})[Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 4,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 5,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 6,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 7,
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 8,
+      })
+    })
+
+    it('should emit no values if start === end', () => {
+      const iterator = subject.range({start: 0, end: 0})[Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({done: true, value: 0})
+    })
+  })
+
   describe('enumerate', () => {
     it('should add the index to each element', () => {
       const iterator = subject
@@ -198,6 +301,67 @@ describe('sync', () => {
         done: false,
         value: 'one',
       })
+    })
+  })
+
+  describe('zip', () => {
+    it('should zip two iterators', () => {
+      const iterator = subject
+        .zip([1, 2, 3], ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return the continuing iterator', () => {
+      const longA = [1, 2, 3, 4]
+      const longB = ['one', 'two', 'three', 'four']
+      const iteratorA = subject
+        .zip(longA, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+      const iteratorB = subject.zip([1, 2, 3], longB)[Symbol.iterator]()
+
+      expect(iteratorA.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(iteratorA.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(iteratorA.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      const doneA = iteratorA.next()
+      expect(doneA).toEqual({done: true, value: longA})
+
+      expect(iteratorB.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(iteratorB.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(iteratorB.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      const doneB = iteratorB.next()
+      expect(doneB).toEqual({done: true, value: longB})
     })
   })
 

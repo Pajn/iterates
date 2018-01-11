@@ -19,6 +19,50 @@ export const asIterable = <T>(iterator: IterableOrIterator<T>): Iterable<T> => {
 }
 
 /**
+ * Creates an iterator with values from `start` to `end`.
+ *
+ * If end is undefined, the iterator will have an infinite length.
+ * If end is equal to start, no value will be emitted.
+ *
+ * The iterator will step with the specified `step` size which defaults to `1`.
+ * The step size can be set to negative if the start value is higher than the end value
+ *
+ * The iterator will end with a return value of the value following the end value.
+ *
+ * ## Examples
+ * ```typescript
+ * [...range({start: 0, end: 3})] // [0, 1, 2]
+ * [...range({start: 3, end: 2, step: -1})] // [2, 1, 0]
+ * [...range({start: 0})] // (0, 1, 2, 3, 4, ...)
+ * [...range({start: 0, step: -2})] // (0, -2, -4, -6, -8, ...)
+ * ```
+ */
+export function* range({
+  start,
+  end,
+  step = 1,
+}: {
+  start: number
+  end?: number
+  step?: number
+}) {
+  if (start === end) return start
+
+  let value = start
+  while (true) {
+    yield value
+    value += step
+    if (end !== undefined) {
+      if (start < end) {
+        if (value >= end) return value
+      } else {
+        if (value <= end) return value
+      }
+    }
+  }
+}
+
+/**
  * Creates an iterator which gives the current iteration count
  * as well as the next value.
  *
@@ -161,7 +205,7 @@ export const flatten: {
  *
  * ## Example
  * ```typescript
- * [...filter(e => e > 2), [1, 2, 3]] // [2, 3]
+ * [...filter(e => e > 2, [1, 2, 3])] // [2, 3]
  * ```
  */
 export const filter: {
@@ -181,6 +225,43 @@ export const filter: {
       yield item
     }
   }
+})
+
+/**
+ * Zips two iterators by taking the next value of each iterator as a tuple
+ *
+ * If the two iterators have a different length, it will zip until the first iterator ends
+ * and then end with a return value of the longer iterator.
+ *
+ * ## Example
+ * ```typescript
+ * [...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]
+ * ```
+ */
+export const zip: {
+  <A, B>(a: IterableOrIterator<A>, b: IterableOrIterator<B>): IterableIterator<
+    [A, B]
+  >
+  <A, B>(a: IterableOrIterator<A>): (
+    b: IterableOrIterator<B>,
+  ) => IterableIterator<[A, B]>
+} = curry(function* zip<A, B>(
+  a: IterableOrIterator<A>,
+  b: IterableOrIterator<B>,
+): IterableIterator<[A, B]> {
+  const iterableA = asIterable(a)
+  const iteratorB = asIterable(b)[Symbol.iterator]()
+  for (const itemA of iterableA) {
+    const {done, value: itemB} = iteratorB.next()
+    if (done) {
+      return a
+    } else {
+      yield [itemA, itemB]
+    }
+  }
+
+  const {done} = iteratorB.next()
+  if (!done) return b
 })
 
 /**

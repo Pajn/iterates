@@ -7,7 +7,6 @@
   "homepage": "https://pajn.github.io/iterates",
   "keywords": ["iterator", "asynciterator", "async", "typescript"],
   "dependencies": {
-    "@types/webpack": "^3.0.4",
     "auto-curry": "^0.2.1"
   },
   "devDependencies": {

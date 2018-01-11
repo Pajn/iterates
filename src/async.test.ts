@@ -252,6 +252,69 @@ describe('async', () => {
     })
   })
 
+  describe('zip', () => {
+    it('should zip two iterators', async () => {
+      const iterator = subject
+        .zip(asAsync(1, 2, 3), asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return the continuing iterator', async () => {
+      const longA = asAsync(1, 2, 3, 4)
+      const longB = asAsync('one', 'two', 'three', 'four')
+      const iteratorA = subject
+        .zip(longA, asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+      const iteratorB = subject
+        .zip(asAsync(1, 2, 3), longB)
+        [Symbol.asyncIterator]()
+
+      expect(await iteratorA.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(await iteratorA.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(await iteratorA.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      const doneA = await iteratorA.next()
+      expect(doneA).toEqual({done: true, value: longA})
+
+      expect(await iteratorB.next()).toEqual({
+        done: false,
+        value: [1, 'one'],
+      })
+      expect(await iteratorB.next()).toEqual({
+        done: false,
+        value: [2, 'two'],
+      })
+      expect(await iteratorB.next()).toEqual({
+        done: false,
+        value: [3, 'three'],
+      })
+      const doneB = await iteratorB.next()
+      expect(doneB).toEqual({done: true, value: longB})
+    })
+  })
+
   describe('find', () => {
     it('should return the first item that pass the test', async () => {
       const item = await subject.find(

@@ -2,7 +2,9 @@ import curry from 'auto-curry'
 import {IterableOrIterator} from './sync'
 
 export type Awaitable<T> = T | PromiseLike<T>
-export type AsyncIterableOrIterator<T> = AsyncIterable<T> | AsyncIterator<T>
+export type AsyncIterableOrIterator<T> =
+  | AsyncIterable<Awaitable<T>>
+  | AsyncIterator<Awaitable<T>>
 export type AnyIterableOrIterator<T> =
   | IterableOrIterator<T>
   | AsyncIterableOrIterator<T>
@@ -93,10 +95,10 @@ export const map: {
 export const filterMap: {
   <T, U>(
     fn: (item: T) => Awaitable<U | undefined>,
-    asyncIterator: AsyncIterableOrIterator<Awaitable<T>>,
+    asyncIterator: AsyncIterableOrIterator<T>,
   ): AsyncIterableIterator<U>
   <T, U>(fn: (item: T) => Awaitable<U | undefined>): (
-    asyncIterator: AsyncIterableOrIterator<Awaitable<T>>,
+    asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
 } = curry(async function* filterMap<T, U>(
   fn: (item: T) => Awaitable<U | undefined>,
@@ -120,14 +122,14 @@ export const filterMap: {
  */
 export const flatMap: {
   <T, U>(
-    fn: (item: T) => AsyncIterableOrIterator<Awaitable<U>>,
-    asyncIterator: AsyncIterableOrIterator<Awaitable<T>>,
+    fn: (item: T) => AsyncIterableOrIterator<U>,
+    asyncIterator: AsyncIterableOrIterator<T>,
   ): AsyncIterableIterator<U>
-  <T, U>(fn: (item: T) => AsyncIterableOrIterator<Awaitable<U>>): (
-    asyncIterator: AsyncIterableOrIterator<Awaitable<T>>,
+  <T, U>(fn: (item: T) => AsyncIterableOrIterator<U>): (
+    asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
 } = curry(async function* flatMap<T, U>(
-  fn: (item: T) => AsyncIterableOrIterator<Awaitable<U>>,
+  fn: (item: T) => AsyncIterableOrIterator<U>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<U> {
   for await (const item of asIterable(asyncIterator)) {
@@ -185,6 +187,44 @@ export const filter: {
       yield item
     }
   }
+})
+
+/**
+ * Zips two iterators by taking the next value of each iterator as a tuple
+ *
+ * If the two iterators have a different length, it will zip until the first iterator ends
+ * and then end with a return value of the longer iterator.
+ *
+ * ## Example
+ * ```typescript
+ * [...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]
+ * ```
+ */
+export const zip: {
+  <A, B>(
+    a: AsyncIterableOrIterator<A>,
+    b: AsyncIterableOrIterator<B>,
+  ): AsyncIterableIterator<[A, B]>
+  <A, B>(a: AsyncIterableOrIterator<A>): (
+    b: AsyncIterableOrIterator<B>,
+  ) => AsyncIterableIterator<[A, B]>
+} = curry(async function* zip<A, B>(
+  a: AsyncIterableOrIterator<A>,
+  b: AsyncIterableOrIterator<B>,
+): AsyncIterableIterator<[A, B]> {
+  const iterableA = asIterable(a)
+  const iteratorB = asIterable(b)[Symbol.asyncIterator]()
+  for await (const itemA of iterableA) {
+    const {done, value: itemB} = await iteratorB.next()
+    if (done) {
+      return a
+    } else {
+      yield [await itemA, await itemB]
+    }
+  }
+
+  const {done} = await iteratorB.next()
+  if (!done) return b
 })
 
 /**
