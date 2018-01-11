@@ -2491,16 +2491,16 @@ doctrine@^2.0.0:
   dependencies:
     esutils "^2.0.2"
 
-documittu-analyzer-ts@^0.2.28, documittu-analyzer-ts@^0.2.30:
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.2.30.tgz#eb37de7dc8db992fb31b85ef3f279b8c96d95418"
+documittu-analyzer-ts@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.3.0.tgz#0995e80c5496d205cacf97e56c93b3e8dae5e252"
   dependencies:
     "@types/node" "^8.5.5"
     glob "^7.1.2"
 
-documittu-markdown-loader@^0.2.30:
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/documittu-markdown-loader/-/documittu-markdown-loader-0.2.30.tgz#4a3593d20013e016b446e704b266dde2cb70cb87"
+documittu-markdown-loader@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/documittu-markdown-loader/-/documittu-markdown-loader-0.3.0.tgz#1c9e0dd1134ec9e8873ed31bc4220684c4019853"
   dependencies:
     camelize "^1.0.0"
     except "^0.1.3"
@@ -2508,9 +2508,9 @@ documittu-markdown-loader@^0.2.30:
     node-prismjs "^0.1.0"
     remarkable "^1.6.2"
 
-documittu-template-default@^0.2.28, documittu-template-default@^0.2.30:
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/documittu-template-default/-/documittu-template-default-0.2.30.tgz#119a673ae85b9dc200e973831d5650eabb8689ac"
+documittu-template-default@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/documittu-template-default/-/documittu-template-default-0.3.0.tgz#55486c78a922509919c23d709ab2ad60388d26d7"
   dependencies:
     "@types/react" "^16.0.34"
     "@types/react-document-title" "^2.0.1"
@@ -2520,7 +2520,7 @@ documittu-template-default@^0.2.28, documittu-template-default@^0.2.30:
     "@types/webpack" "^3.0.10"
     "@types/webpack-env" "^1.13.3"
     babel-polyfill "^6.23.0"
-    documittu-analyzer-ts "^0.2.30"
+    documittu-analyzer-ts "^0.3.0"
     glamor "^2.20.40"
     glamorous "^4.11.2"
     material-definitions "^0.3.3"
@@ -2537,9 +2537,9 @@ documittu-template-default@^0.2.28, documittu-template-default@^0.2.30:
     style-definitions "^0.1.4"
     styled-components "^2.4.0"
 
-documittu@^0.2.28:
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/documittu/-/documittu-0.2.30.tgz#f08ec612d6ed0c81c2e0c5699eac44f80eb285b1"
+documittu@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/documittu/-/documittu-0.3.0.tgz#c16011baceb0ac1abfa5df9bdc3e0600d592da5c"
   dependencies:
     "@types/node" "^8.5.5"
     "@types/react" "^16.0.34"
@@ -2556,8 +2556,8 @@ documittu@^0.2.28:
     chalk "2.3.0"
     cross-spawn "^5.1.0"
     css-loader "0.28.4"
-    documittu-markdown-loader "^0.2.30"
-    documittu-template-default "^0.2.30"
+    documittu-markdown-loader "^0.3.0"
+    documittu-template-default "^0.3.0"
     dotenv "4.0.0"
     extract-text-webpack-plugin "3.0.0"
     file-loader "0.11.2"
@@ -2569,7 +2569,7 @@ documittu@^0.2.28:
     react-scripts "^1.0.17"
     style-loader "0.19.0"
     ts-loader "3.1.0"
-    typescript "2.7.0-dev.20180104"
+    typescript "2.7.0-dev.20180111"
     url-loader "0.6.2"
     webpack "3.5.1"
     webpack-dev-server "2.8.2"
@@ -8981,9 +8981,9 @@ typescript-babel-jest@^1.0.4:
     babel-jest "20.0.3"
     typescript "^2.4.1"
 
-typescript@2.7.0-dev.20180104:
-  version "2.7.0-dev.20180104"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20180104.tgz#ec00799bf9c34791c4f6f6ff268b1734db7730a9"
+typescript@2.7.0-dev.20180111:
+  version "2.7.0-dev.20180111"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20180111.tgz#9d8114598082059d1aaaafdcb9180ee00098ba58"
 
 typescript@^2.4.1:
   version "2.4.2"

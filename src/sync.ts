@@ -8,7 +8,7 @@ export type IterableOrIterator<T> = Iterable<T> | Iterator<T>
 export type Ordering = number
 
 /**
- * A helper function to turn an IterableOrIterator to an Iterable
+ * @internal
  */
 export const asIterable = <T>(iterator: IterableOrIterator<T>): Iterable<T> => {
   if (typeof iterator[Symbol.iterator] === 'undefined') {

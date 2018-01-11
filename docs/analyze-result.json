@@ -4,11 +4,10 @@
     "outDir": "lib",
     "typeDeclaration": {
         "7": "1",
-        "61": "0",
-        "243": "16",
-        "255": "17",
-        "265": "18",
-        "488": "31"
+        "66": "0",
+        "249": "16",
+        "261": "17",
+        "271": "18"
     },
     "declarationModule": {
         "0": "lib/sync.js",
@@ -41,9 +40,7 @@
         "27": "lib/async.js",
         "28": "lib/async.js",
         "29": "lib/async.js",
-        "30": "lib/async.js",
-        "31": "lib/common.js",
-        "32": "lib/common.js"
+        "30": "lib/async.js"
     },
     "modules": {
         "lib/sync.js": {
@@ -56,7 +53,6 @@
                     "kind": "Type",
                     "exportedIn": [],
                     "name": "IterableOrIterator",
-                    "documentation": "Either an Iterable (for example an Array) or an Iterator\n(for example the result of a generator function)",
                     "type": {
                         "kind": "Union",
                         "types": [
@@ -67,10 +63,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 52
+                                        "id": 57
                                     }
                                 ],
-                                "id": 56,
+                                "id": 61,
                                 "importedFrom": "lib es2015"
                             },
                             {
@@ -80,46 +76,47 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 52
+                                        "id": 57
                                     }
                                 ],
-                                "id": 60,
+                                "id": 65,
                                 "importedFrom": "lib es2015"
                             }
                         ]
-                    }
+                    },
+                    "documentation": "Either an Iterable (for example an Array) or an Iterator\n(for example the result of a generator function)",
+                    "internal": false
                 },
                 "1": {
                     "id": "1",
                     "kind": "Type",
                     "exportedIn": [],
                     "name": "Ordering",
-                    "documentation": "",
                     "type": {
                         "kind": "Named",
                         "name": "number",
                         "id": 7
-                    }
+                    },
+                    "documentation": "",
+                    "internal": false
                 },
                 "2": {
                     "id": "2",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "asIterable",
-                    "documentation": "A helper function to turn an IterableOrIterator to an Iterable",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 63
+                                    "id": 68
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -127,11 +124,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 63
+                                                "id": 68
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -142,43 +141,43 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 63
+                                        "id": 68
                                     }
                                 ],
-                                "id": 64,
+                                "id": 69,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "",
+                    "internal": true
                 },
                 "3": {
                     "id": "3",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "range",
-                    "documentation": "Creates an iterator with values from `start` to `end`.\n\nIf end is undefined, the iterator will have an infinite length.\nIf end is equal to start, no value will be emitted.\n\nThe iterator will step with the specified `step` size which defaults to `1`.\nThe step size can be set to negative if the start value is higher than the end value\n\nThe iterator will end with a return value of the value following the end value.\n\n## Examples\n```typescript\n[...range({start: 0, end: 3})] // [0, 1, 2]\n[...range({start: 3, end: 2, step: -1})] // [2, 1, 0]\n[...range({start: 0})] // (0, 1, 2, 3, 4, ...)\n[...range({start: 0, step: -2})] // (0, -2, -4, -6, -8, ...)\n```",
                     "signatures": [
                         {
                             "parameters": [
                                 {
                                     "name": "__0",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Object",
                                         "properties": [
                                             {
                                                 "name": "start",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "number",
                                                     "id": 7
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             },
                                             {
                                                 "name": "end",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Union",
                                                     "types": [
@@ -194,11 +193,12 @@
                                                         }
                                                     ]
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": true
                                             },
                                             {
                                                 "name": "step",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Union",
                                                     "types": [
@@ -214,10 +214,14 @@
                                                         }
                                                     ]
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": true
                                             }
                                         ]
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -231,31 +235,31 @@
                                         "id": 7
                                     }
                                 ],
-                                "id": 73,
+                                "id": 78,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Creates an iterator with values from `start` to `end`.\n\nIf end is undefined, the iterator will have an infinite length.\nIf end is equal to start, no value will be emitted.\n\nThe iterator will step with the specified `step` size which defaults to `1`.\nThe step size can be set to negative if the start value is higher than the end value\n\nThe iterator will end with a return value of the value following the end value.\n\n## Examples\n```typescript\n[...range({start: 0, end: 3})] // [0, 1, 2]\n[...range({start: 3, end: 2, step: -1})] // [2, 1, 0]\n[...range({start: 0})] // (0, 1, 2, 3, 4, ...)\n[...range({start: 0, step: -2})] // (0, -2, -4, -6, -8, ...)\n```",
+                    "internal": false
                 },
                 "4": {
                     "id": "4",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "enumerate",
-                    "documentation": "Creates an iterator which gives the current iteration count\nas well as the next value.\n\nThe iterator returned yields objects of {index, item}, where index is the\ncurrent index of iteration and item is the value returned by the iterator.\n\n## Example\n```typescript\n[...enumerate(['a', 'b', 'c'])]\n// [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 75
+                                    "id": 80
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "Iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -263,11 +267,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 75
+                                                "id": 80
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -280,82 +286,86 @@
                                         "properties": [
                                             {
                                                 "name": "index",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "number",
                                                     "id": 7
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             },
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 75
+                                                    "id": 80
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 77,
+                                "id": 82,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Creates an iterator which gives the current iteration count\nas well as the next value.\n\nThe iterator returned yields objects of {index, item}, where index is the\ncurrent index of iteration and item is the value returned by the iterator.\n\n## Example\n```typescript\n[...enumerate(['a', 'b', 'c'])]\n// [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]\n```",
+                    "internal": false
                 },
                 "5": {
                     "id": "5",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "map",
-                    "documentation": "Calls fn for every item in the iterator to produce an iterator\nwith the results of fn(item)\n\n## Example\n```typescript\n[...map(e => e*e), [1, 2, 3]] // [1, 4, 9]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 82
+                                    "id": 87
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 83
+                                    "id": 88
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 82
+                                                    "id": 87
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
                                         "returnType": {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 83
+                                            "id": 88
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -363,11 +373,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 82
+                                                "id": 87
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -378,10 +390,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 83
+                                        "id": 88
                                     }
                                 ],
-                                "id": 84,
+                                "id": 89,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -390,38 +402,40 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 85
+                                    "id": 90
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 86
+                                    "id": 91
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 85
+                                                    "id": 90
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
                                         "returnType": {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 86
+                                            "id": 91
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -430,7 +444,6 @@
                                 "parameters": [
                                     {
                                         "name": "iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -438,11 +451,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 85
+                                                    "id": 90
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -453,51 +468,52 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 86
+                                            "id": 91
                                         }
                                     ],
-                                    "id": 93,
+                                    "id": 98,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls fn for every item in the iterator to produce an iterator\nwith the results of fn(item)\n\n## Example\n```typescript\n[...map(e => e*e), [1, 2, 3]] // [1, 4, 9]\n```",
+                    "internal": false
                 },
                 "6": {
                     "id": "6",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "filterMap",
-                    "documentation": "Like map but filter out undefined results\n\n## Example\n```typescript\n[...flatMap(e => e % 2 === 0 ? undefined : e*e), [1, 2, 3]] // [1, 9]\n```\n\n## Why not map(filter())?\nfilterMap is functionally equivalent to map(filter()) but can give\ncleaner code and higher performance for cases where filtering is applied\nto the mapped value and not the input value.",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 98
+                                    "id": 103
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 99
+                                    "id": 104
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 98
+                                                    "id": 103
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -512,16 +528,17 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 99
+                                                    "id": 104
                                                 }
                                             ]
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -529,11 +546,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 98
+                                                "id": 103
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -544,10 +563,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 99
+                                        "id": 104
                                     }
                                 ],
-                                "id": 100,
+                                "id": 105,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -556,29 +575,29 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 101
+                                    "id": 106
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 102
+                                    "id": 107
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 101
+                                                    "id": 106
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -593,11 +612,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 102
+                                                    "id": 107
                                                 }
                                             ]
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -606,7 +627,6 @@
                                 "parameters": [
                                     {
                                         "name": "iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -614,11 +634,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 101
+                                                    "id": 106
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -629,51 +651,52 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 102
+                                            "id": 107
                                         }
                                     ],
-                                    "id": 111,
+                                    "id": 116,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Like map but filter out undefined results\n\n## Example\n```typescript\n[...flatMap(e => e % 2 === 0 ? undefined : e*e), [1, 2, 3]] // [1, 9]\n```\n\n## Why not map(filter())?\nfilterMap is functionally equivalent to map(filter()) but can give\ncleaner code and higher performance for cases where filtering is applied\nto the mapped value and not the input value.",
+                    "internal": false
                 },
                 "7": {
                     "id": "7",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "flatMap",
-                    "documentation": "Like map but flattens the result a single level\n\n## Example\n```typescript\n[...flatMap(e => [e, e*e]), [1, 2, 3]] // [1, 1, 2, 4, 3, 9]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 116
+                                    "id": 121
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 117
+                                    "id": 122
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 116
+                                                    "id": 121
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -684,17 +707,18 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 117
+                                                    "id": 122
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -702,11 +726,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 116
+                                                "id": 121
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -717,10 +743,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 117
+                                        "id": 122
                                     }
                                 ],
-                                "id": 118,
+                                "id": 123,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -729,29 +755,29 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 119
+                                    "id": 124
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 120
+                                    "id": 125
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 119
+                                                    "id": 124
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -762,12 +788,14 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 120
+                                                    "id": 125
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -776,7 +804,6 @@
                                 "parameters": [
                                     {
                                         "name": "iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -784,11 +811,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 119
+                                                    "id": 124
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -799,35 +828,35 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 120
+                                            "id": 125
                                         }
                                     ],
-                                    "id": 133,
+                                    "id": 138,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Like map but flattens the result a single level\n\n## Example\n```typescript\n[...flatMap(e => [e, e*e]), [1, 2, 3]] // [1, 1, 2, 4, 3, 9]\n```",
+                    "internal": false
                 },
                 "8": {
                     "id": "8",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "flatten",
-                    "documentation": "Flattens an iterator a single level\n\n## Example\n```typescript\n[...flatten([[1, 2], [], [3]])] // [1, 2, 3]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 138
+                                    "id": 143
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -839,14 +868,16 @@
                                                     {
                                                         "kind": "Named",
                                                         "name": "T",
-                                                        "id": 138
+                                                        "id": 143
                                                     }
                                                 ],
-                                                "id": 61
+                                                "id": 66
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -857,45 +888,46 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 138
+                                        "id": 143
                                     }
                                 ],
-                                "id": 139,
+                                "id": 144,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Flattens an iterator a single level\n\n## Example\n```typescript\n[...flatten([[1, 2], [], [3]])] // [1, 2, 3]\n```",
+                    "internal": false
                 },
                 "9": {
                     "id": "9",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "filter",
-                    "documentation": "Calls predicate for every item in the iterator to produce an iterator\nwith only the items for which predicate returns true\n\n## Example\n```typescript\n[...filter(e => e > 2, [1, 2, 3])] // [2, 3]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 147
+                                    "id": 152
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "predicate",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 147
+                                                    "id": 152
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -905,11 +937,12 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -917,11 +950,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 147
+                                                "id": 152
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -932,10 +967,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 147
+                                        "id": 152
                                     }
                                 ],
-                                "id": 148,
+                                "id": 153,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -944,24 +979,24 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 149
+                                    "id": 154
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "predicate",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 149
+                                                    "id": 154
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -971,6 +1006,8 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -979,7 +1016,6 @@
                                 "parameters": [
                                     {
                                         "name": "iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -987,11 +1023,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 149
+                                                    "id": 154
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -1002,40 +1040,40 @@
                                         {
                                             "kind": "Named",
                                             "name": "T",
-                                            "id": 149
+                                            "id": 154
                                         }
                                     ],
-                                    "id": 156,
+                                    "id": 161,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls predicate for every item in the iterator to produce an iterator\nwith only the items for which predicate returns true\n\n## Example\n```typescript\n[...filter(e => e > 2, [1, 2, 3])] // [2, 3]\n```",
+                    "internal": false
                 },
                 "10": {
                     "id": "10",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "zip",
-                    "documentation": "Zips two iterators by taking the next value of each iterator as a tuple\n\nIf the two iterators have a different length, it will zip until the first iterator ends\nand then end with a return value of the longer iterator.\n\n## Example\n```typescript\n[...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "A",
-                                    "id": 161
+                                    "id": 166
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "B",
-                                    "id": 162
+                                    "id": 167
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "a",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1043,16 +1081,17 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 161
+                                                "id": 166
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "b",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1060,11 +1099,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "B",
-                                                "id": 162
+                                                "id": 167
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1079,18 +1120,18 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 161
+                                                "id": 166
                                             },
                                             {
                                                 "kind": "Named",
                                                 "name": "B",
-                                                "id": 162
+                                                "id": 167
                                             }
                                         ],
-                                        "id": 167
+                                        "id": 173
                                     }
                                 ],
-                                "id": 168,
+                                "id": 174,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -1099,18 +1140,17 @@
                                 {
                                     "kind": "Named",
                                     "name": "A",
-                                    "id": 169
+                                    "id": 175
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "B",
-                                    "id": 170
+                                    "id": 176
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "a",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1118,11 +1158,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 169
+                                                "id": 175
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1131,7 +1173,6 @@
                                 "parameters": [
                                     {
                                         "name": "b",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -1139,11 +1180,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "B",
-                                                    "id": 170
+                                                    "id": 176
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -1158,54 +1201,55 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "A",
-                                                    "id": 169
+                                                    "id": 175
                                                 },
                                                 {
                                                     "kind": "Named",
                                                     "name": "B",
-                                                    "id": 170
+                                                    "id": 176
                                                 }
                                             ],
-                                            "id": 181
+                                            "id": 187
                                         }
                                     ],
-                                    "id": 182,
+                                    "id": 188,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Zips two iterators by taking the next value of each iterator as a tuple\n\nIf the two iterators have a different length, it will zip until the first iterator ends\nand then end with a return value of the longer iterator.\n\n## Example\n```typescript\n[...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]\n```",
+                    "internal": false
                 },
                 "11": {
                     "id": "11",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "find",
-                    "documentation": "Calls fn for every item and returns the first item for which fn returns true\n\nReturns undefined if fn return fals for all items or if the iterator is empty\n\n## Example\n```typescript\n[...find(e => e > 1), [1, 2, 3]] // 2\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 187
+                                    "id": 193
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 187
+                                                    "id": 193
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -1215,11 +1259,12 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "Iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1227,11 +1272,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 187
+                                                "id": 193
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1246,7 +1293,7 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 187
+                                        "id": 193
                                     }
                                 ]
                             }
@@ -1256,24 +1303,24 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 189
+                                    "id": 195
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 189
+                                                    "id": 195
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -1283,6 +1330,8 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1291,7 +1340,6 @@
                                 "parameters": [
                                     {
                                         "name": "Iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -1299,11 +1347,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 189
+                                                    "id": 195
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -1318,72 +1368,21 @@
                                         {
                                             "kind": "Named",
                                             "name": "T",
-                                            "id": 189
+                                            "id": 195
                                         }
                                     ]
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls fn for every item and returns the first item for which fn returns true\n\nReturns undefined if fn return fals for all items or if the iterator is empty\n\n## Example\n```typescript\n[...find(e => e > 1), [1, 2, 3]] // 2\n```",
+                    "internal": false
                 },
                 "12": {
                     "id": "12",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "first",
-                    "documentation": "Returns the first value of the iterator or undefined if it's empty",
-                    "signatures": [
-                        {
-                            "typeParameters": [
-                                {
-                                    "kind": "Named",
-                                    "name": "T",
-                                    "id": 201
-                                }
-                            ],
-                            "parameters": [
-                                {
-                                    "name": "iterator",
-                                    "documentation": "",
-                                    "type": {
-                                        "kind": "Named",
-                                        "name": "IterableOrIterator",
-                                        "parameters": [
-                                            {
-                                                "kind": "Named",
-                                                "name": "T",
-                                                "id": 201
-                                            }
-                                        ],
-                                        "id": 61
-                                    },
-                                    "optional": false
-                                }
-                            ],
-                            "returnType": {
-                                "kind": "Union",
-                                "types": [
-                                    {
-                                        "kind": "Named",
-                                        "name": "undefined",
-                                        "id": 4
-                                    },
-                                    {
-                                        "kind": "Named",
-                                        "name": "T",
-                                        "id": 201
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                },
-                "13": {
-                    "id": "13",
-                    "kind": "Function",
-                    "exportedIn": [],
-                    "name": "take",
-                    "documentation": "Returns an iterator with the first count values of the iterator\n\nThe returned iterator may hold fewer than `count` values if the\niterator contains less items than `count`",
                     "signatures": [
                         {
                             "typeParameters": [
@@ -1395,18 +1394,7 @@
                             ],
                             "parameters": [
                                 {
-                                    "name": "count",
-                                    "documentation": "",
-                                    "type": {
-                                        "kind": "Named",
-                                        "name": "number",
-                                        "id": 7
-                                    },
-                                    "optional": false
-                                },
-                                {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1417,114 +1405,10 @@
                                                 "id": 207
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
-                                    "optional": false
-                                }
-                            ],
-                            "returnType": {
-                                "kind": "Named",
-                                "name": "IterableIterator",
-                                "parameters": [
-                                    {
-                                        "kind": "Named",
-                                        "name": "T",
-                                        "id": 207
-                                    }
-                                ],
-                                "id": 208,
-                                "importedFrom": "lib es2015"
-                            }
-                        },
-                        {
-                            "typeParameters": [
-                                {
-                                    "kind": "Named",
-                                    "name": "T",
-                                    "id": 209
-                                }
-                            ],
-                            "parameters": [
-                                {
-                                    "name": "count",
                                     "documentation": "",
-                                    "type": {
-                                        "kind": "Named",
-                                        "name": "number",
-                                        "id": 7
-                                    },
-                                    "optional": false
-                                }
-                            ],
-                            "returnType": {
-                                "kind": "Function",
-                                "parameters": [
-                                    {
-                                        "name": "iterator",
-                                        "documentation": "",
-                                        "type": {
-                                            "kind": "Named",
-                                            "name": "IterableOrIterator",
-                                            "parameters": [
-                                                {
-                                                    "kind": "Named",
-                                                    "name": "T",
-                                                    "id": 209
-                                                }
-                                            ],
-                                            "id": 61
-                                        },
-                                        "optional": false
-                                    }
-                                ],
-                                "returnType": {
-                                    "kind": "Named",
-                                    "name": "IterableIterator",
-                                    "parameters": [
-                                        {
-                                            "kind": "Named",
-                                            "name": "T",
-                                            "id": 209
-                                        }
-                                    ],
-                                    "id": 214,
-                                    "importedFrom": "lib es2015"
-                                }
-                            }
-                        }
-                    ]
-                },
-                "14": {
-                    "id": "14",
-                    "kind": "Function",
-                    "exportedIn": [],
-                    "name": "last",
-                    "documentation": "Returns the last value of the iterator or undefined if it's empty",
-                    "signatures": [
-                        {
-                            "typeParameters": [
-                                {
-                                    "kind": "Named",
-                                    "name": "T",
-                                    "id": 219
-                                }
-                            ],
-                            "parameters": [
-                                {
-                                    "name": "iterator",
-                                    "documentation": "",
-                                    "type": {
-                                        "kind": "Named",
-                                        "name": "IterableOrIterator",
-                                        "parameters": [
-                                            {
-                                                "kind": "Named",
-                                                "name": "T",
-                                                "id": 219
-                                            }
-                                        ],
-                                        "id": 61
-                                    },
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1539,19 +1423,141 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 219
+                                        "id": 207
                                     }
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Returns the first value of the iterator or undefined if it's empty",
+                    "internal": false
                 },
-                "15": {
-                    "id": "15",
+                "13": {
+                    "id": "13",
                     "kind": "Function",
                     "exportedIn": [],
-                    "name": "sort",
-                    "documentation": "",
+                    "name": "take",
+                    "signatures": [
+                        {
+                            "typeParameters": [
+                                {
+                                    "kind": "Named",
+                                    "name": "T",
+                                    "id": 213
+                                }
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "count",
+                                    "type": {
+                                        "kind": "Named",
+                                        "name": "number",
+                                        "id": 7
+                                    },
+                                    "documentation": "",
+                                    "internal": false,
+                                    "optional": false
+                                },
+                                {
+                                    "name": "iterator",
+                                    "type": {
+                                        "kind": "Named",
+                                        "name": "IterableOrIterator",
+                                        "parameters": [
+                                            {
+                                                "kind": "Named",
+                                                "name": "T",
+                                                "id": 213
+                                            }
+                                        ],
+                                        "id": 66
+                                    },
+                                    "documentation": "",
+                                    "internal": false,
+                                    "optional": false
+                                }
+                            ],
+                            "returnType": {
+                                "kind": "Named",
+                                "name": "IterableIterator",
+                                "parameters": [
+                                    {
+                                        "kind": "Named",
+                                        "name": "T",
+                                        "id": 213
+                                    }
+                                ],
+                                "id": 214,
+                                "importedFrom": "lib es2015"
+                            }
+                        },
+                        {
+                            "typeParameters": [
+                                {
+                                    "kind": "Named",
+                                    "name": "T",
+                                    "id": 215
+                                }
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "count",
+                                    "type": {
+                                        "kind": "Named",
+                                        "name": "number",
+                                        "id": 7
+                                    },
+                                    "documentation": "",
+                                    "internal": false,
+                                    "optional": false
+                                }
+                            ],
+                            "returnType": {
+                                "kind": "Function",
+                                "parameters": [
+                                    {
+                                        "name": "iterator",
+                                        "type": {
+                                            "kind": "Named",
+                                            "name": "IterableOrIterator",
+                                            "parameters": [
+                                                {
+                                                    "kind": "Named",
+                                                    "name": "T",
+                                                    "id": 215
+                                                }
+                                            ],
+                                            "id": 66
+                                        },
+                                        "documentation": "",
+                                        "internal": false,
+                                        "optional": false
+                                    }
+                                ],
+                                "returnType": {
+                                    "kind": "Named",
+                                    "name": "IterableIterator",
+                                    "parameters": [
+                                        {
+                                            "kind": "Named",
+                                            "name": "T",
+                                            "id": 215
+                                        }
+                                    ],
+                                    "id": 220,
+                                    "importedFrom": "lib es2015"
+                                }
+                            }
+                        }
+                    ],
+                    "documentation": "Returns an iterator with the first count values of the iterator\n\nThe returned iterator may hold fewer than `count` values if the\niterator contains less items than `count`",
+                    "internal": false
+                },
+                "14": {
+                    "id": "14",
+                    "kind": "Function",
+                    "exportedIn": [],
+                    "name": "last",
                     "signatures": [
                         {
                             "typeParameters": [
@@ -1563,43 +1569,7 @@
                             ],
                             "parameters": [
                                 {
-                                    "name": "fn",
-                                    "documentation": "",
-                                    "type": {
-                                        "kind": "Function",
-                                        "parameters": [
-                                            {
-                                                "name": "a",
-                                                "documentation": "",
-                                                "type": {
-                                                    "kind": "Named",
-                                                    "name": "T",
-                                                    "id": 225
-                                                },
-                                                "optional": false
-                                            },
-                                            {
-                                                "name": "b",
-                                                "documentation": "",
-                                                "type": {
-                                                    "kind": "Named",
-                                                    "name": "T",
-                                                    "id": 225
-                                                },
-                                                "optional": false
-                                            }
-                                        ],
-                                        "returnType": {
-                                            "kind": "Named",
-                                            "name": "number",
-                                            "id": 7
-                                        }
-                                    },
-                                    "optional": false
-                                },
-                                {
                                     "name": "iterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "IterableOrIterator",
@@ -1610,8 +1580,102 @@
                                                 "id": 225
                                             }
                                         ],
-                                        "id": 61
+                                        "id": 66
                                     },
+                                    "documentation": "",
+                                    "internal": false,
+                                    "optional": false
+                                }
+                            ],
+                            "returnType": {
+                                "kind": "Union",
+                                "types": [
+                                    {
+                                        "kind": "Named",
+                                        "name": "undefined",
+                                        "id": 4
+                                    },
+                                    {
+                                        "kind": "Named",
+                                        "name": "T",
+                                        "id": 225
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "documentation": "Returns the last value of the iterator or undefined if it's empty",
+                    "internal": false
+                },
+                "15": {
+                    "id": "15",
+                    "kind": "Function",
+                    "exportedIn": [],
+                    "name": "sort",
+                    "signatures": [
+                        {
+                            "typeParameters": [
+                                {
+                                    "kind": "Named",
+                                    "name": "T",
+                                    "id": 231
+                                }
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "fn",
+                                    "type": {
+                                        "kind": "Function",
+                                        "parameters": [
+                                            {
+                                                "name": "a",
+                                                "type": {
+                                                    "kind": "Named",
+                                                    "name": "T",
+                                                    "id": 231
+                                                },
+                                                "documentation": "",
+                                                "internal": false,
+                                                "optional": false
+                                            },
+                                            {
+                                                "name": "b",
+                                                "type": {
+                                                    "kind": "Named",
+                                                    "name": "T",
+                                                    "id": 231
+                                                },
+                                                "documentation": "",
+                                                "internal": false,
+                                                "optional": false
+                                            }
+                                        ],
+                                        "returnType": {
+                                            "kind": "Named",
+                                            "name": "number",
+                                            "id": 7
+                                        }
+                                    },
+                                    "documentation": "",
+                                    "internal": false,
+                                    "optional": false
+                                },
+                                {
+                                    "name": "iterator",
+                                    "type": {
+                                        "kind": "Named",
+                                        "name": "IterableOrIterator",
+                                        "parameters": [
+                                            {
+                                                "kind": "Named",
+                                                "name": "T",
+                                                "id": 231
+                                            }
+                                        ],
+                                        "id": 66
+                                    },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1622,10 +1686,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 225
+                                        "id": 231
                                     }
                                 ],
-                                "id": 226,
+                                "id": 232,
                                 "importedFrom": "lib es2016"
                             }
                         },
@@ -1634,34 +1698,35 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 227
+                                    "id": 233
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "a",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 227
+                                                    "id": 233
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             },
                                             {
                                                 "name": "b",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 227
+                                                    "id": 233
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -1671,6 +1736,8 @@
                                             "id": 7
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1679,7 +1746,6 @@
                                 "parameters": [
                                     {
                                         "name": "iterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "IterableOrIterator",
@@ -1687,11 +1753,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 227
+                                                    "id": 233
                                                 }
                                             ],
-                                            "id": 61
+                                            "id": 66
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -1702,15 +1770,17 @@
                                         {
                                             "kind": "Named",
                                             "name": "T",
-                                            "id": 227
+                                            "id": 233
                                         }
                                     ],
-                                    "id": 234,
+                                    "id": 240,
                                     "importedFrom": "lib es2016"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "",
+                    "internal": false
                 }
             },
             "reexports": []
@@ -1725,14 +1795,13 @@
                     "kind": "Type",
                     "exportedIn": [],
                     "name": "Awaitable",
-                    "documentation": "",
                     "type": {
                         "kind": "Union",
                         "types": [
                             {
                                 "kind": "Named",
                                 "name": "T",
-                                "id": 238
+                                "id": 244
                             },
                             {
                                 "kind": "Named",
@@ -1741,21 +1810,22 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 238
+                                        "id": 244
                                     }
                                 ],
-                                "id": 242,
+                                "id": 248,
                                 "importedFrom": "lib es5"
                             }
                         ]
-                    }
+                    },
+                    "documentation": "",
+                    "internal": false
                 },
                 "17": {
                     "id": "17",
                     "kind": "Type",
                     "exportedIn": [],
                     "name": "AsyncIterableOrIterator",
-                    "documentation": "",
                     "type": {
                         "kind": "Union",
                         "types": [
@@ -1770,13 +1840,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 244
+                                                "id": 250
                                             }
                                         ],
-                                        "id": 243
+                                        "id": 249
                                     }
                                 ],
-                                "id": 250,
+                                "id": 256,
                                 "importedFrom": "lib esnext"
                             },
                             {
@@ -1790,24 +1860,25 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 244
+                                                "id": 250
                                             }
                                         ],
-                                        "id": 243
+                                        "id": 249
                                     }
                                 ],
-                                "id": 254,
+                                "id": 260,
                                 "importedFrom": "lib esnext"
                             }
                         ]
-                    }
+                    },
+                    "documentation": "Either an AsyncIterable or an AsyncIterator",
+                    "internal": false
                 },
                 "18": {
                     "id": "18",
                     "kind": "Type",
                     "exportedIn": [],
                     "name": "AnyIterableOrIterator",
-                    "documentation": "",
                     "type": {
                         "kind": "Union",
                         "types": [
@@ -1818,10 +1889,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 256
+                                        "id": 262
                                     }
                                 ],
-                                "id": 257,
+                                "id": 263,
                                 "importedFrom": "lib es2015"
                             },
                             {
@@ -1831,10 +1902,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 256
+                                        "id": 262
                                     }
                                 ],
-                                "id": 258,
+                                "id": 264,
                                 "importedFrom": "lib es2015"
                             },
                             {
@@ -1848,13 +1919,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 256
+                                                "id": 262
                                             }
                                         ],
-                                        "id": 243
+                                        "id": 249
                                     }
                                 ],
-                                "id": 262,
+                                "id": 268,
                                 "importedFrom": "lib esnext"
                             },
                             {
@@ -1868,37 +1939,37 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 256
+                                                "id": 262
                                             }
                                         ],
-                                        "id": 243
+                                        "id": 249
                                     }
                                 ],
-                                "id": 263,
+                                "id": 269,
                                 "importedFrom": "lib esnext"
                             }
                         ]
-                    }
+                    },
+                    "documentation": "",
+                    "internal": true
                 },
                 "19": {
                     "id": "19",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "asIterable",
-                    "documentation": "",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 267
+                                    "id": 273
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -1906,11 +1977,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 267
+                                                "id": 273
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1921,34 +1994,34 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 267
+                                        "id": 273
                                     }
                                 ],
-                                "id": 273,
+                                "id": 279,
                                 "importedFrom": "lib esnext"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "",
+                    "internal": true
                 },
                 "20": {
                     "id": "20",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "enumerate",
-                    "documentation": "Creates an iterator which gives the current iteration count\nas well as the next value.\n\nThe iterator returned yields objects of {index, item}, where index is the\ncurrent index of iteration and item is the value returned by the iterator.\n\n## Example\n```typescript\n[...enumerate(['a', 'b', 'c'])]\n// [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 275
+                                    "id": 281
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -1956,11 +2029,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 275
+                                                "id": 281
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -1973,68 +2048,71 @@
                                         "properties": [
                                             {
                                                 "name": "index",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "number",
                                                     "id": 7
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             },
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 275
+                                                    "id": 281
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 280,
+                                "id": 286,
                                 "importedFrom": "lib esnext"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Creates an iterator which gives the current iteration count\nas well as the next value.\n\nThe iterator returned yields objects of {index, item}, where index is the\ncurrent index of iteration and item is the value returned by the iterator.\n\n## Example\n```typescript\n[...enumerate(['a', 'b', 'c'])]\n// [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]\n```",
+                    "internal": false
                 },
                 "21": {
                     "id": "21",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "map",
-                    "documentation": "Calls fn for every item in the iterator to produce an iterator\nwith the results of fn(item)\n\n## Example\n```typescript\n[...map(e => e*e), [1, 2, 3]] // [1, 4, 9]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 287
+                                    "id": 293
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 288
+                                    "id": 294
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 287
+                                                    "id": 293
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2045,17 +2123,18 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 288
+                                                    "id": 294
                                                 }
                                             ],
-                                            "id": 243
+                                            "id": 249
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2063,11 +2142,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 287
+                                                "id": 293
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2078,10 +2159,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 288
+                                        "id": 294
                                     }
                                 ],
-                                "id": 289,
+                                "id": 295,
                                 "importedFrom": "lib esnext"
                             }
                         },
@@ -2090,29 +2171,29 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 290
+                                    "id": 296
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 291
+                                    "id": 297
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 290
+                                                    "id": 296
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2123,12 +2204,14 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 291
+                                                    "id": 297
                                                 }
                                             ],
-                                            "id": 243
+                                            "id": 249
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2137,7 +2220,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -2145,11 +2227,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 290
+                                                    "id": 296
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -2160,51 +2244,52 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 291
+                                            "id": 297
                                         }
                                     ],
-                                    "id": 304,
+                                    "id": 310,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls fn for every item in the iterator to produce an iterator\nwith the results of fn(item)\n\n## Example\n```typescript\n[...map(e => e*e), [1, 2, 3]] // [1, 4, 9]\n```",
+                    "internal": false
                 },
                 "22": {
                     "id": "22",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "filterMap",
-                    "documentation": "Like map but filter out undefined results\n\n## Example\n```typescript\n[...flatMap(e => e % 2 === 0 ? undefined : e*e), [1, 2, 3]] // [1, 9]\n```\n\n## Why not map(filter())?\nfilterMap is functionally equivalent to map(filter()) but can give\ncleaner code and higher performance for cases where filtering is applied\nto the mapped value and not the input value.",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 311
+                                    "id": 317
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 312
+                                    "id": 318
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 311
+                                                    "id": 317
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2223,19 +2308,20 @@
                                                         {
                                                             "kind": "Named",
                                                             "name": "U",
-                                                            "id": 312
+                                                            "id": 318
                                                         }
                                                     ]
                                                 }
                                             ],
-                                            "id": 243
+                                            "id": 249
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2243,11 +2329,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 311
+                                                "id": 317
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2258,10 +2346,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 312
+                                        "id": 318
                                     }
                                 ],
-                                "id": 313,
+                                "id": 319,
                                 "importedFrom": "lib esnext"
                             }
                         },
@@ -2270,29 +2358,29 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 314
+                                    "id": 320
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 315
+                                    "id": 321
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 314
+                                                    "id": 320
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2311,14 +2399,16 @@
                                                         {
                                                             "kind": "Named",
                                                             "name": "U",
-                                                            "id": 315
+                                                            "id": 321
                                                         }
                                                     ]
                                                 }
                                             ],
-                                            "id": 243
+                                            "id": 249
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2327,7 +2417,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -2335,11 +2424,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 314
+                                                    "id": 320
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -2350,51 +2441,52 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 315
+                                            "id": 321
                                         }
                                     ],
-                                    "id": 330,
+                                    "id": 336,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Like map but filter out undefined results\n\n## Example\n```typescript\n[...flatMap(e => e % 2 === 0 ? undefined : e*e), [1, 2, 3]] // [1, 9]\n```\n\n## Why not map(filter())?\nfilterMap is functionally equivalent to map(filter()) but can give\ncleaner code and higher performance for cases where filtering is applied\nto the mapped value and not the input value.",
+                    "internal": false
                 },
                 "23": {
                     "id": "23",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "flatMap",
-                    "documentation": "Like map but flattens the result a single level\n\n## Example\n```typescript\n[...flatMap(e => [e, e*e]), [1, 2, 3]] // [1, 1, 2, 4, 3, 9]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 337
+                                    "id": 343
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 338
+                                    "id": 344
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 337
+                                                    "id": 343
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2405,17 +2497,18 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 338
+                                                    "id": 344
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2423,11 +2516,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 337
+                                                "id": 343
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2438,10 +2533,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "U",
-                                        "id": 338
+                                        "id": 344
                                     }
                                 ],
-                                "id": 339,
+                                "id": 345,
                                 "importedFrom": "lib esnext"
                             }
                         },
@@ -2450,29 +2545,29 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 340
+                                    "id": 346
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "U",
-                                    "id": 341
+                                    "id": 347
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 340
+                                                    "id": 346
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2483,12 +2578,14 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "U",
-                                                    "id": 341
+                                                    "id": 347
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2497,7 +2594,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -2505,11 +2601,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 340
+                                                    "id": 346
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -2520,35 +2618,35 @@
                                         {
                                             "kind": "Named",
                                             "name": "U",
-                                            "id": 341
+                                            "id": 347
                                         }
                                     ],
-                                    "id": 360,
+                                    "id": 366,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Like map but flattens the result a single level\n\n## Example\n```typescript\n[...flatMap(e => [e, e*e]), [1, 2, 3]] // [1, 1, 2, 4, 3, 9]\n```",
+                    "internal": false
                 },
                 "24": {
                     "id": "24",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "flatten",
-                    "documentation": "Flattens an iterator a single level\n\n## Example\n```typescript\n[...flatten([[1, 2], [], [3]])] // [1, 2, 3]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 367
+                                    "id": 373
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2560,14 +2658,16 @@
                                                     {
                                                         "kind": "Named",
                                                         "name": "T",
-                                                        "id": 367
+                                                        "id": 373
                                                     }
                                                 ],
-                                                "id": 255
+                                                "id": 261
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2578,45 +2678,46 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 367
+                                        "id": 373
                                     }
                                 ],
-                                "id": 368,
+                                "id": 374,
                                 "importedFrom": "lib esnext"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Flattens an iterator a single level\n\n## Example\n```typescript\n[...flatten([[1, 2], [], [3]])] // [1, 2, 3]\n```",
+                    "internal": false
                 },
                 "25": {
                     "id": "25",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "filter",
-                    "documentation": "Calls predicate for every item in the iterator to produce an iterator\nwith only the items for which predicate returns true\n\n## Example\n```typescript\n[...filter(e => e > 2), [1, 2, 3]] // [2, 3]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 380
+                                    "id": 386
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 380
+                                                    "id": 386
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2626,11 +2727,12 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2638,11 +2740,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 380
+                                                "id": 386
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2653,10 +2757,10 @@
                                     {
                                         "kind": "Named",
                                         "name": "T",
-                                        "id": 380
+                                        "id": 386
                                     }
                                 ],
-                                "id": 381,
+                                "id": 387,
                                 "importedFrom": "lib esnext"
                             }
                         },
@@ -2665,24 +2769,24 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 382
+                                    "id": 388
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 382
+                                                    "id": 388
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2692,6 +2796,8 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2700,7 +2806,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -2708,11 +2813,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 382
+                                                    "id": 388
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -2723,40 +2830,40 @@
                                         {
                                             "kind": "Named",
                                             "name": "T",
-                                            "id": 382
+                                            "id": 388
                                         }
                                     ],
-                                    "id": 391,
+                                    "id": 397,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls predicate for every item in the iterator to produce an iterator\nwith only the items for which predicate returns true\n\n## Example\n```typescript\n[...filter(e => e > 2), [1, 2, 3]] // [2, 3]\n```",
+                    "internal": false
                 },
                 "26": {
                     "id": "26",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "zip",
-                    "documentation": "Zips two iterators by taking the next value of each iterator as a tuple\n\nIf the two iterators have a different length, it will zip until the first iterator ends\nand then end with a return value of the longer iterator.\n\n## Example\n```typescript\n[...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "A",
-                                    "id": 398
+                                    "id": 404
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "B",
-                                    "id": 399
+                                    "id": 405
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "a",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2764,16 +2871,17 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 398
+                                                "id": 404
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "b",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2781,11 +2889,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "B",
-                                                "id": 399
+                                                "id": 405
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2800,18 +2910,18 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 398
+                                                "id": 404
                                             },
                                             {
                                                 "kind": "Named",
                                                 "name": "B",
-                                                "id": 399
+                                                "id": 405
                                             }
                                         ],
-                                        "id": 400
+                                        "id": 406
                                     }
                                 ],
-                                "id": 401,
+                                "id": 407,
                                 "importedFrom": "lib esnext"
                             }
                         },
@@ -2820,18 +2930,17 @@
                                 {
                                     "kind": "Named",
                                     "name": "A",
-                                    "id": 402
+                                    "id": 408
                                 },
                                 {
                                     "kind": "Named",
                                     "name": "B",
-                                    "id": 403
+                                    "id": 409
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "a",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2839,11 +2948,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "A",
-                                                "id": 402
+                                                "id": 408
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2852,7 +2963,6 @@
                                 "parameters": [
                                     {
                                         "name": "b",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -2860,11 +2970,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "B",
-                                                    "id": 403
+                                                    "id": 409
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -2879,54 +2991,55 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "A",
-                                                    "id": 402
+                                                    "id": 408
                                                 },
                                                 {
                                                     "kind": "Named",
                                                     "name": "B",
-                                                    "id": 403
+                                                    "id": 409
                                                 }
                                             ],
-                                            "id": 420
+                                            "id": 426
                                         }
                                     ],
-                                    "id": 421,
+                                    "id": 427,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Zips two iterators by taking the next value of each iterator as a tuple\n\nIf the two iterators have a different length, it will zip until the first iterator ends\nand then end with a return value of the longer iterator.\n\n## Example\n```typescript\n[...zip([1, 2, 3], ['a', 'b', 'c']) // [[1, 'a'], [2, 'b'], [3, 'c']]\n```",
+                    "internal": false
                 },
                 "27": {
                     "id": "27",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "find",
-                    "documentation": "Calls fn for every item and returns the first item for which fn returns true\n\nReturns undefined if fn return fals for all items or if the iterator is empty\n\n## Example\n```typescript\n[...find(e => e > 1), [1, 2, 3]] // 2\n```",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 428
+                                    "id": 434
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 428
+                                                    "id": 434
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -2936,11 +3049,12 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -2948,11 +3062,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 428
+                                                "id": 434
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -2971,12 +3087,12 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 428
+                                                "id": 434
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 433,
+                                "id": 439,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -2985,24 +3101,24 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 434
+                                    "id": 440
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "fn",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Function",
                                         "parameters": [
                                             {
                                                 "name": "item",
-                                                "documentation": "",
                                                 "type": {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 434
+                                                    "id": 440
                                                 },
+                                                "documentation": "",
+                                                "internal": false,
                                                 "optional": false
                                             }
                                         ],
@@ -3012,6 +3128,8 @@
                                             "id": 10
                                         }
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -3020,7 +3138,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -3028,11 +3145,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 434
+                                                    "id": 440
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -3051,37 +3170,37 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 434
+                                                    "id": 440
                                                 }
                                             ]
                                         }
                                     ],
-                                    "id": 444,
+                                    "id": 450,
                                     "importedFrom": "lib es2015"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Calls fn for every item and returns the first item for which fn returns true\n\nReturns undefined if fn return fals for all items or if the iterator is empty\n\n## Example\n```typescript\n[...find(e => e > 1), [1, 2, 3]] // 2\n```",
+                    "internal": false
                 },
                 "28": {
                     "id": "28",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "first",
-                    "documentation": "Returns the first value of the iterator or undefined if it's empty",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 451
+                                    "id": 457
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -3089,11 +3208,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 451
+                                                "id": 457
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -3112,46 +3233,47 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 451
+                                                "id": 457
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 453,
+                                "id": 459,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Returns the first value of the iterator or undefined if it's empty",
+                    "internal": false
                 },
                 "29": {
                     "id": "29",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "take",
-                    "documentation": "Returns an iterator with the first count values of the iterator\n\nThe returned iterator may hold fewer than `count` values if the\niterator contains less items than `count`",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 460
+                                    "id": 466
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "count",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "number",
                                         "id": 7
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 },
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -3159,11 +3281,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 460
+                                                "id": 466
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -3182,12 +3306,12 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 460
+                                                "id": 466
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 462,
+                                "id": 468,
                                 "importedFrom": "lib es2015"
                             }
                         },
@@ -3196,18 +3320,19 @@
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 463
+                                    "id": 469
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "count",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "number",
                                         "id": 7
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -3216,7 +3341,6 @@
                                 "parameters": [
                                     {
                                         "name": "asyncIterator",
-                                        "documentation": "",
                                         "type": {
                                             "kind": "Named",
                                             "name": "AsyncIterableOrIterator",
@@ -3224,11 +3348,13 @@
                                                 {
                                                     "kind": "Named",
                                                     "name": "T",
-                                                    "id": 463
+                                                    "id": 469
                                                 }
                                             ],
-                                            "id": 255
+                                            "id": 261
                                         },
+                                        "documentation": "",
+                                        "internal": false,
                                         "optional": false
                                     }
                                 ],
@@ -3239,35 +3365,35 @@
                                         {
                                             "kind": "Named",
                                             "name": "T",
-                                            "id": 463
+                                            "id": 469
                                         }
                                     ],
-                                    "id": 470,
+                                    "id": 476,
                                     "importedFrom": "lib esnext"
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Returns an iterator with the first count values of the iterator\n\nThe returned iterator may hold fewer than `count` values if the\niterator contains less items than `count`",
+                    "internal": false
                 },
                 "30": {
                     "id": "30",
                     "kind": "Function",
                     "exportedIn": [],
                     "name": "last",
-                    "documentation": "Returns the last value of the iterator or undefined if it's empty",
                     "signatures": [
                         {
                             "typeParameters": [
                                 {
                                     "kind": "Named",
                                     "name": "T",
-                                    "id": 477
+                                    "id": 483
                                 }
                             ],
                             "parameters": [
                                 {
                                     "name": "asyncIterator",
-                                    "documentation": "",
                                     "type": {
                                         "kind": "Named",
                                         "name": "AsyncIterableOrIterator",
@@ -3275,11 +3401,13 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 477
+                                                "id": 483
                                             }
                                         ],
-                                        "id": 255
+                                        "id": 261
                                     },
+                                    "documentation": "",
+                                    "internal": false,
                                     "optional": false
                                 }
                             ],
@@ -3298,16 +3426,18 @@
                                             {
                                                 "kind": "Named",
                                                 "name": "T",
-                                                "id": 477
+                                                "id": 483
                                             }
                                         ]
                                     }
                                 ],
-                                "id": 479,
+                                "id": 485,
                                 "importedFrom": "lib es2015"
                             }
                         }
-                    ]
+                    ],
+                    "documentation": "Returns the last value of the iterator or undefined if it's empty",
+                    "internal": false
                 }
             },
             "reexports": []
@@ -3317,102 +3447,6 @@
             "srcPath": "src/async.test.ts",
             "outPath": "lib/async.test.js",
             "declarations": {},
-            "reexports": []
-        },
-        "lib/common.js": {
-            "name": "common",
-            "srcPath": "src/common.ts",
-            "outPath": "lib/common.js",
-            "declarations": {
-                "31": {
-                    "id": "31",
-                    "kind": "Type",
-                    "exportedIn": [],
-                    "name": "IterableOrIterator",
-                    "documentation": "",
-                    "type": {
-                        "kind": "Union",
-                        "types": [
-                            {
-                                "kind": "Named",
-                                "name": "Iterable",
-                                "parameters": [
-                                    {
-                                        "kind": "Named",
-                                        "name": "T",
-                                        "id": 485
-                                    }
-                                ],
-                                "id": 486,
-                                "importedFrom": "lib es2015"
-                            },
-                            {
-                                "kind": "Named",
-                                "name": "Iterator",
-                                "parameters": [
-                                    {
-                                        "kind": "Named",
-                                        "name": "T",
-                                        "id": 485
-                                    }
-                                ],
-                                "id": 487,
-                                "importedFrom": "lib es2015"
-                            }
-                        ]
-                    }
-                },
-                "32": {
-                    "id": "32",
-                    "kind": "Function",
-                    "exportedIn": [],
-                    "name": "asIterable",
-                    "documentation": "",
-                    "signatures": [
-                        {
-                            "typeParameters": [
-                                {
-                                    "kind": "Named",
-                                    "name": "T",
-                                    "id": 490
-                                }
-                            ],
-                            "parameters": [
-                                {
-                                    "name": "iterator",
-                                    "documentation": "",
-                                    "type": {
-                                        "kind": "Named",
-                                        "name": "IterableOrIterator",
-                                        "parameters": [
-                                            {
-                                                "kind": "Named",
-                                                "name": "T",
-                                                "id": 490
-                                            }
-                                        ],
-                                        "id": 488
-                                    },
-                                    "optional": false
-                                }
-                            ],
-                            "returnType": {
-                                "kind": "Named",
-                                "name": "Iterable",
-                                "parameters": [
-                                    {
-                                        "kind": "Named",
-                                        "name": "T",
-                                        "id": 490
-                                    }
-                                ],
-                                "id": 491,
-                                "importedFrom": "lib es2015"
-                            }
-                        }
-                    ]
-                }
-            },
             "reexports": []
         },
         "lib/index.js": {

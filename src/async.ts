@@ -2,13 +2,18 @@ import curry from 'auto-curry'
 import {IterableOrIterator} from './sync'
 
 export type Awaitable<T> = T | PromiseLike<T>
+/**
+ * Either an AsyncIterable or an AsyncIterator
+ */
 export type AsyncIterableOrIterator<T> =
   | AsyncIterable<Awaitable<T>>
   | AsyncIterator<Awaitable<T>>
+/** @internal */
 export type AnyIterableOrIterator<T> =
   | IterableOrIterator<T>
   | AsyncIterableOrIterator<T>
 
+/** @internal */
 export const asIterable = <T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterable<T> => {
