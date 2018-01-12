@@ -1,7 +1,7 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": "Pajn/iterates",
   "homepage": "https://pajn.github.io/iterates",
