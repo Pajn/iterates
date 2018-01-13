@@ -1,5 +1,5 @@
 import curry from 'auto-curry'
-import {IterableOrIterator} from './sync'
+import {IterableOrIterator, asIterable as asSyncIterable} from './sync'
 
 export type Awaitable<T> = T | PromiseLike<T>
 /**
@@ -22,6 +22,28 @@ export const asIterable = <T>(
   } else {
     return asyncIterator as AsyncIterable<T>
   }
+}
+/**
+ * Turns a syncronous Iterable or Iterator to an asyncronous Iterable.
+ */
+export async function* asAsyncIterable<T>(
+  iterator: IterableOrIterator<T>,
+): AsyncIterable<T> {
+  for (const value of asSyncIterable(iterator)) {
+    yield value
+  }
+}
+/**
+ * Collect all values of the iterator in an Array.
+ */
+export async function asArray<T>(
+  iterator: AsyncIterableOrIterator<T>,
+): Promise<Array<T>> {
+  const array: Array<T> = []
+  for await (const value of asIterable(iterator)) {
+    array.push(value)
+  }
+  return array
 }
 
 /**

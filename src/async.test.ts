@@ -12,6 +12,68 @@ async function* asAsync<T>(...items: Array<T>): AsyncIterable<T> {
 }
 
 describe('async', () => {
+  describe('asAsyncIterable', () => {
+    it('should turn a syncronous iterable to an asynchronous iterable', async () => {
+      const iterator = subject
+        .asAsyncIterable([1, 2, 3])
+        [Symbol.asyncIterator]()
+
+      const firstValue = iterator.next()
+      expect(firstValue).toBeInstanceOf(Promise)
+      expect(await firstValue).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should turn a syncronous iterator to an asynchronous iterable', async () => {
+      const iterator = subject
+        .asAsyncIterable([1, 2, 3][Symbol.iterator]())
+        [Symbol.asyncIterator]()
+
+      const firstValue = iterator.next()
+      expect(firstValue).toBeInstanceOf(Promise)
+      expect(await firstValue).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 2,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+  })
+
+  describe('asArray', () => {
+    it('should collect all values of an iterable in an array', async () => {
+      const array = await subject.asArray(asAsync(1, 2, 3))
+
+      expect(array).toEqual([1, 2, 3])
+    })
+
+    it('should collect all values of an iterator in an array', async () => {
+      const array = await subject.asArray(
+        asAsync(1, 2, 3)[Symbol.asyncIterator](),
+      )
+
+      expect(array).toEqual([1, 2, 3])
+    })
+  })
+
   describe('enumerate', () => {
     it('should add the index to each element', async () => {
       const iterator = subject

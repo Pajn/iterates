@@ -17,6 +17,12 @@ export const asIterable = <T>(iterator: IterableOrIterator<T>): Iterable<T> => {
     return iterator as Iterable<T>
   }
 }
+/**
+ * Collect all values of the iterator in an Array.
+ */
+export function asArray<T>(iterator: IterableOrIterator<T>): Array<T> {
+  return [...asIterable(iterator)]
+}
 
 /**
  * Creates an iterator with values from `start` to `end`.

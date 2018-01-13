@@ -1,6 +1,20 @@
 import * as subject from './sync'
 
 describe('sync', () => {
+  describe('asArray', () => {
+    it('should collect all values of an iterable in an array', () => {
+      const array = subject.asArray(subject.range({start: 1, end: 4}))
+
+      expect(array).toEqual([1, 2, 3])
+    })
+
+    it('should collect all values of an iterator in an array', () => {
+      const array = subject.asArray([1, 2, 3][Symbol.iterator]())
+
+      expect(array).toEqual([1, 2, 3])
+    })
+  })
+
   describe('range', () => {
     it('should count from start to end', () => {
       const iterator = subject.range({start: 0, end: 3})[Symbol.iterator]()
