@@ -3,12 +3,12 @@
     "mainModule": "lib/index.js",
     "outDir": "lib",
     "typeDeclaration": {
-        "3": "23",
         "7": "1",
         "66": "0",
         "255": "17",
         "267": "18",
         "277": "19",
+        "304": "23",
         "309": "24"
     },
     "declarationModule": {
@@ -94,7 +94,14 @@
                     },
                     "documentation": "Either an Iterable (for example an Array) or an Iterator\n(for example the result of a generator function)",
                     "internal": false,
-                    "extends": []
+                    "extends": [],
+                    "parameters": [
+                        {
+                            "kind": "Named",
+                            "name": "T",
+                            "id": 57
+                        }
+                    ]
                 },
                 "1": {
                     "id": "1",
@@ -1928,7 +1935,14 @@
                     },
                     "documentation": "",
                     "internal": false,
-                    "extends": []
+                    "extends": [],
+                    "parameters": [
+                        {
+                            "kind": "Named",
+                            "name": "T",
+                            "id": 250
+                        }
+                    ]
                 },
                 "18": {
                     "id": "18",
@@ -1982,7 +1996,14 @@
                     },
                     "documentation": "Either an AsyncIterable or an AsyncIterator",
                     "internal": false,
-                    "extends": []
+                    "extends": [],
+                    "parameters": [
+                        {
+                            "kind": "Named",
+                            "name": "T",
+                            "id": 256
+                        }
+                    ]
                 },
                 "19": {
                     "id": "19",
@@ -2062,7 +2083,14 @@
                     },
                     "documentation": "",
                     "internal": true,
-                    "extends": []
+                    "extends": [],
+                    "parameters": [
+                        {
+                            "kind": "Named",
+                            "name": "T",
+                            "id": 268
+                        }
+                    ]
                 },
                 "20": {
                     "id": "20",
@@ -2272,6 +2300,18 @@
                             "id": 308,
                             "importedFrom": "lib esnext"
                         }
+                    ],
+                    "parameters": [
+                        {
+                            "kind": "Named",
+                            "name": "T",
+                            "id": 305
+                        },
+                        {
+                            "kind": "Named",
+                            "name": "E",
+                            "id": 306
+                        }
                     ]
                 },
                 "24": {
@@ -2280,7 +2320,25 @@
                     "exportedIn": [],
                     "name": "Subject",
                     "extends": [],
-                    "implements": [],
+                    "implements": [
+                        {
+                            "kind": "Named",
+                            "name": "ISubject",
+                            "parameters": [
+                                {
+                                    "kind": "Named",
+                                    "name": "T",
+                                    "id": 305
+                                },
+                                {
+                                    "kind": "Named",
+                                    "name": "E",
+                                    "id": 306
+                                }
+                            ],
+                            "id": 304
+                        }
+                    ],
                     "typeParameters": [
                         {
                             "kind": "Named",
