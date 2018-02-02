@@ -1,3 +1,4 @@
+import {setImmediate} from 'timers'
 import * as subject from './async'
 import {Awaitable} from './async'
 
@@ -71,6 +72,102 @@ describe('async', () => {
       )
 
       expect(array).toEqual([1, 2, 3])
+    })
+  })
+
+  describe('Subject', () => {
+    it('should buffer items', async () => {
+      const controller = new subject.Subject()
+      const iterator1 = controller[Symbol.asyncIterator]()
+      const iterator2 = controller[Symbol.asyncIterator]()
+
+      controller.next('A')
+      controller.next('B')
+      controller.next('C')
+      controller.done()
+
+      expect(await iterator1.next()).toEqual({
+        done: false,
+        value: 'A',
+      })
+      expect(await iterator2.next()).toEqual({
+        done: false,
+        value: 'A',
+      })
+      expect(await iterator1.next()).toEqual({
+        done: false,
+        value: 'B',
+      })
+      expect(await iterator2.next()).toEqual({
+        done: false,
+        value: 'B',
+      })
+      expect(await iterator1.next()).toEqual({
+        done: false,
+        value: 'C',
+      })
+      expect(await iterator2.next()).toEqual({
+        done: false,
+        value: 'C',
+      })
+      expect(await iterator1.next()).toEqual({
+        done: true,
+        value: undefined,
+      })
+      expect(await iterator2.next()).toEqual({
+        done: true,
+        value: undefined,
+      })
+    })
+
+    it('should support items pushed after next', async () => {
+      const controller = new subject.Subject()
+      const iterator = controller[Symbol.asyncIterator]()
+
+      const aValue = iterator.next()
+      const bValue = iterator.next()
+      const cValue = iterator.next()
+      const doneValue = iterator.next()
+      controller.next('A')
+      controller.next('B')
+      controller.next('C')
+      controller.done()
+
+      expect(await aValue).toEqual({
+        done: false,
+        value: 'A',
+      })
+      expect(await bValue).toEqual({
+        done: false,
+        value: 'B',
+      })
+      expect(await cValue).toEqual({
+        done: false,
+        value: 'C',
+      })
+      expect(await doneValue).toEqual({
+        done: true,
+        value: undefined,
+      })
+    })
+
+    it('should support errors', async () => {
+      const controller = new subject.Subject()
+      const iterator = controller[Symbol.asyncIterator]()
+
+      controller.throw(new Error('Thrown error'))
+
+      await expect(iterator.next()).rejects.toEqual(Error('Thrown error'))
+    })
+
+    it('should throw errors if called after beeing ended', async () => {
+      const controller = new subject.Subject()
+
+      controller.done()
+
+      expect(() => controller.next('Value')).toThrow()
+      expect(() => controller.throw('Value')).toThrow()
+      expect(() => controller.done()).toThrow()
     })
   })
 
@@ -374,6 +471,97 @@ describe('async', () => {
       })
       const doneB = await iteratorB.next()
       expect(doneB).toEqual({done: true, value: longB})
+    })
+  })
+
+  describe('throttle', () => {
+    let nowMock: jest.Mock<number>
+    let realNow = Date.now
+
+    async function setTime(time: number) {
+      // First, force a spin of the event loop
+      await new Promise(resolve => setImmediate(resolve))
+      nowMock.mockReturnValue(time)
+    }
+
+    beforeEach(() => {
+      Date.now = nowMock = jest.fn()
+    })
+
+    afterEach(() => {
+      Date.now = realNow
+    })
+
+    it('should skip items that arrive quicker than the duration', async () => {
+      const controller = new subject.Subject()
+      const iterator = subject.throttle(10, controller)[Symbol.asyncIterator]()
+      await setTime(10)
+
+      const a = iterator.next()
+
+      controller.next('A')
+      controller.next('B')
+      await setTime(15)
+      controller.next('C')
+
+      const b = iterator.next()
+
+      await setTime(20)
+
+      const c = iterator.next()
+
+      await setTime(35)
+
+      controller.next('D')
+      controller.next('E')
+
+      await setTime(40)
+
+      controller.next('F')
+
+      await setTime(45)
+
+      controller.next('G')
+
+      expect(await a).toEqual({
+        done: false,
+        value: 'A',
+      })
+      expect(await b).toEqual({
+        done: false,
+        value: 'D',
+      })
+      expect(await c).toEqual({
+        done: false,
+        value: 'G',
+      })
+    })
+
+    it("should emit the last item even though it's inside the duration", async () => {
+      const controller = new subject.Subject()
+      const iterator = subject.throttle(10, controller)[Symbol.asyncIterator]()
+      await setTime(10)
+
+      const a = iterator.next()
+      const b = iterator.next()
+      const c = iterator.next()
+
+      controller.next('A')
+      controller.next('B')
+      controller.done()
+
+      expect(await a).toEqual({
+        done: false,
+        value: 'A',
+      })
+      expect(await b).toEqual({
+        done: false,
+        value: 'B',
+      })
+      expect(await c).toEqual({
+        done: true,
+        value: undefined,
+      })
     })
   })
 

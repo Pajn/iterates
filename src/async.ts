@@ -1,5 +1,10 @@
 import curry from 'auto-curry'
+import {EventEmitter} from 'events'
 import {IterableOrIterator, asIterable as asSyncIterable} from './sync'
+
+if (Symbol.asyncIterator === undefined) {
+  ;(Symbol as any).asyncIterator = Symbol()
+}
 
 export type Awaitable<T> = T | PromiseLike<T>
 /**
@@ -44,6 +49,140 @@ export async function asArray<T>(
     array.push(value)
   }
   return array
+}
+
+class Subscriber<T, E> {
+  items: Array<{done: boolean; isError: boolean; value?: T; error?: E}> = []
+  eventEmitter = new EventEmitter()
+  iterator: AsyncIterator<T>
+
+  constructor(private dispose: () => void) {
+    let lastNext: Promise<any> = Promise.resolve()
+    this.iterator = {
+      next: async () => {
+        await lastNext
+        return (lastNext = new Promise<IteratorResult<T>>((resolve, reject) => {
+          if (this.items.length > 0) {
+            const item = this.items.shift()!
+            if (item.isError) {
+              reject(item.error)
+            } else {
+              resolve({done: item.done, value: item.value!})
+            }
+            return
+          }
+
+          this.eventEmitter.once('value', () => {
+            const item = this.items.shift()!
+            if (item.isError) {
+              reject(item.error)
+            } else {
+              resolve({done: item.done, value: item.value!})
+            }
+          })
+        }))
+      },
+    }
+  }
+
+  pushNext(item: T) {
+    this.items.push({done: false, isError: false, value: item})
+    this.eventEmitter.emit('value')
+  }
+  pushThrow(error: E) {
+    this.items.push({done: false, isError: true, error})
+    this.dispose()
+    this.eventEmitter.emit('value')
+  }
+  done() {
+    this.items.push({done: true, isError: false})
+    this.dispose()
+    this.eventEmitter.emit('value')
+  }
+}
+
+export interface ISubject<T, E = any> extends AsyncIterable<T> {
+  /**
+   * Push an item into the subject to yield to iterators
+   */
+  next(item: T): void
+  /**
+   * Throw an error to the iterators
+   */
+  throw(err: E): void
+  /**
+   * Ends the iterators
+   *
+   * Efter calling done the Subject is dispased and can no longer be used
+   */
+  done(): void
+}
+
+/**
+ * A Subject is an AsyncIterable wich yields values that are pushed to the Subject.
+ *
+ * The Subject can be seen as an EventEmitter, allowing a producer to
+ * push values to one or more consumers
+ *
+ * ## Example
+ * ```typescript
+ * const timestamps = new Subject<Date>()
+ *
+ * setInterval(() => timestamps.next(new Date()), 1000)
+ *
+ * for await (const timestamp of timestamps) {
+ *   console.log(timestamp); // Will log the current time every second
+ * }
+ * ```
+ */
+export class Subject<T, E = any> implements ISubject<T, E> {
+  private _subscribers = new Set<Subscriber<T, E>>()
+  private _isDisposed = false
+
+  private _checkDisposed() {
+    if (this._isDisposed) throw Error('The Subject have been disposed')
+  }
+
+  /**
+   * Push an item into the subject to yield to iterators
+   */
+  public next(item: T) {
+    this._checkDisposed()
+    for (const subscriber of this._subscribers) {
+      subscriber.pushNext(item)
+    }
+  }
+  /**
+   * Throw an error to the iterators
+   */
+  public throw(error: E) {
+    this._checkDisposed()
+    for (const subscriber of this._subscribers) {
+      subscriber.pushThrow(error)
+    }
+    this._subscribers.clear()
+  }
+  /**
+   * Ends the iterators
+   *
+   * Efter calling done the Subject is dispased and can no longer be used
+   */
+  public done() {
+    this._checkDisposed()
+    for (const subscriber of this._subscribers) {
+      subscriber.done()
+    }
+    this._subscribers.clear()
+    this._isDisposed = true
+  }
+
+  [Symbol.asyncIterator]() {
+    const subscriber = new Subscriber<T, E>(() => {
+      this._subscribers.delete(subscriber)
+    })
+    this._subscribers.add(subscriber)
+    return subscriber.iterator
+  }
 }
 
 /**
@@ -252,6 +391,54 @@ export const zip: {
 
   const {done} = await iteratorB.next()
   if (!done) return b
+})
+
+/**
+ * Creates an iterator that only yields the first item yielded by the source
+ * iterator during a window lasting the specified duration
+ *
+ * ## Example
+ * ```typescript
+ * const timestamps = new Subject<Date>()
+ * const throttledTimestamps = throttle(2000, timestamps)
+ *
+ * setInterval(() => timestamps.next(new Date()), 1000)
+ *
+ * for await (const timestamp of throttledTimestamps) {
+ *   console.log(timestamp); // Will log the current time every other second
+ * }
+ * ```
+ */
+export const throttle: {
+  <T>(
+    duration: number,
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ): AsyncIterableIterator<T>
+  <T>(duration: number): (
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ) => AsyncIterableIterator<T>
+} = curry(async function* throttle<T>(
+  duration: number,
+  asyncIterator: AsyncIterableOrIterator<T>,
+): AsyncIterableIterator<T> {
+  let hasItem = false
+  let lastItem: T | undefined = undefined
+  let lastYield = 0
+  for await (const item of asIterable(asyncIterator)) {
+    const now = Date.now()
+    if (lastYield === 0 || now - lastYield >= duration) {
+      hasItem = false
+      lastItem = undefined
+      lastYield = now
+      yield item
+    } else {
+      lastItem = item
+      hasItem = true
+    }
+  }
+  if (hasItem) {
+    yield lastItem!
+  }
 })
 
 /**
