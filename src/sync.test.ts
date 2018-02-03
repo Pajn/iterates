@@ -318,6 +318,20 @@ describe('sync', () => {
     })
   })
 
+  describe('fold', () => {
+    it('should return the accumulated value', () => {
+      const item = subject.fold(0, (sum, item) => sum + item, [1, 2, 3])
+
+      expect(item).toEqual(6)
+    })
+
+    it('should return the initial value if there are no items', () => {
+      const item = subject.fold(0, (sum, item) => sum + item, [])
+
+      expect(item).toEqual(0)
+    })
+  })
+
   describe('zip', () => {
     it('should zip two iterators', () => {
       const iterator = subject
@@ -444,6 +458,26 @@ describe('sync', () => {
       expect(iterator.next()).toEqual({
         done: false,
         value: 'two',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return avalible items if n is greater than the size of the iterable', () => {
+      const iterator = subject
+        .take(4, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
       })
       expect(iterator.next()).toEqual({done: true, value: undefined})
     })

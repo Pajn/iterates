@@ -50,6 +50,14 @@ export async function asArray<T>(
   }
   return array
 }
+/**
+ * Creates in iterable that yields and then ends when the promise resolves
+ */
+export async function* fromPromise<T>(
+  promise: Promise<T>,
+): AsyncIterableIterator<T> {
+  yield await promise
+}
 
 class Subscriber<T, E> {
   items: Array<{done: boolean; isError: boolean; value?: T; error?: E}> = []
@@ -356,6 +364,41 @@ export const filter: {
 })
 
 /**
+ * Reduces an iterator to a single value by iteratively combining each
+ * item of the iterator with an existing value
+ *
+ * Uses initialValue as the initial value, then iterates through the elements
+ * and updates the value with each element using the combine function.
+ *
+ * If the iterator is empty, the initialValue is returned.
+ *
+ * ## Example
+ * ```typescript
+ * fold(0, (sum, item) => sum + item, [1, 2, 3]) // 6
+ * ```
+ */
+export const fold: {
+  <T, U>(
+    initialValue: U,
+    combine: (previousItem: U, item: T) => Awaitable<U>,
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ): Promise<U>
+  <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ) => Promise<U>
+} = curry(async function fold<T, U>(
+  initialValue: U,
+  combine: (previousItem: U, item: T) => U,
+  asyncIterator: AsyncIterableOrIterator<T>,
+): Promise<U> {
+  let value = initialValue
+  for await (const item of asIterable(asyncIterator)) {
+    value = combine(value, await item)
+  }
+  return value
+})
+
+/**
  * Zips two iterators by taking the next value of each iterator as a tuple
  *
  * If the two iterators have a different length, it will zip until the first iterator ends
@@ -448,7 +491,7 @@ export const throttle: {
  *
  * ## Example
  * ```typescript
- * [...find(e => e > 1), [1, 2, 3]] // 2
+ * [...find(e => e > 1, [1, 2, 3])] // 2
  * ```
  */
 export const find: {
@@ -472,6 +515,11 @@ export const find: {
 
 /**
  * Returns the first value of the iterator or undefined if it's empty
+ *
+ * ## Example
+ * ```typescript
+ * first([1, 2, 3]) // 1
+ * ```
  */
 export const first: {
   <T>(asyncIterator: AsyncIterableOrIterator<T>): Promise<T | undefined>
@@ -488,11 +536,17 @@ export const first: {
  *
  * The returned iterator may hold fewer than `count` values if the
  * iterator contains less items than `count`
+ *
+ * ## Example
+ * ```typescript
+ * take(2, [1, 2, 3]) // [1, 2]
+ * ```
  */
 export const take: {
-  <T>(count: number, asyncIterator: AsyncIterableOrIterator<T>): Promise<
-    T | undefined
-  >
+  <T>(
+    count: number,
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ): AsyncIterableIterator<T>
   <T>(count: number): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
@@ -509,7 +563,44 @@ export const take: {
 })
 
 /**
+ * Yields values until the notifier iterable yields a value
+ */
+export const takeUntil: {
+  <T>(
+    notifier: AsyncIterableOrIterator<any>,
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ): AsyncIterableOrIterator<T>
+  <T>(notifier: AsyncIterableOrIterator<any>): (
+    asyncIterator: AsyncIterableOrIterator<T>,
+  ) => AsyncIterableIterator<T>
+} = curry(async function* find<T>(
+  notifier: AsyncIterableOrIterator<any>,
+  asyncIterator: AsyncIterableOrIterator<T>,
+): AsyncIterableIterator<T> {
+  let didResolve = false
+  const returnValue = asIterable(notifier)
+    [Symbol.asyncIterator]()
+    .next()
+    .then(returnValue => {
+      didResolve = true
+      return returnValue
+    })
+  for await (const item of asIterable(asyncIterator)) {
+    if (didResolve) break
+    yield item
+  }
+  if (didResolve) {
+    return await returnValue
+  }
+})
+
+/**
  * Returns the last value of the iterator or undefined if it's empty
+ *
+ * ## Example
+ * ```typescript
+ * last([1, 2, 3]) // 3
+ * ```
  */
 export const last: {
   <T>(asyncIterator: AsyncIterableOrIterator<T>): Promise<T | undefined>

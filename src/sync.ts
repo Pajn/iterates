@@ -234,6 +234,41 @@ export const filter: {
 })
 
 /**
+ * Reduces an iterator to a single value by iteratively combining each
+ * item of the iterator with an existing value
+ *
+ * Uses initialValue as the initial value, then iterates through the elements
+ * and updates the value with each element using the combine function.
+ *
+ * If the iterator is empty, the initialValue is returned.
+ *
+ * ## Example
+ * ```typescript
+ * fold(0, (sum, item) => sum + item, [1, 2, 3]) // 6
+ * ```
+ */
+export const fold: {
+  <T, U>(
+    initialValue: U,
+    combine: (previousItem: U, item: T) => U,
+    iterator: IterableOrIterator<T>,
+  ): U
+  <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
+    iterator: IterableOrIterator<T>,
+  ) => U
+} = curry(function fold<T, U>(
+  initialValue: U,
+  combine: (previousItem: U, item: T) => U,
+  iterator: IterableOrIterator<T>,
+): U {
+  let value = initialValue
+  for (const item of asIterable(iterator)) {
+    value = combine(value, item)
+  }
+  return value
+})
+
+/**
  * Zips two iterators by taking the next value of each iterator as a tuple
  *
  * If the two iterators have a different length, it will zip until the first iterator ends
@@ -277,7 +312,7 @@ export const zip: {
  *
  * ## Example
  * ```typescript
- * [...find(e => e > 1), [1, 2, 3]] // 2
+ * [...find(e => e > 1, [1, 2, 3])] // 2
  * ```
  */
 export const find: {
@@ -298,6 +333,11 @@ export const find: {
 
 /**
  * Returns the first value of the iterator or undefined if it's empty
+ *
+ * ## Example
+ * ```typescript
+ * first([1, 2, 3]) // 1
+ * ```
  */
 export const first: {
   <T>(iterator: IterableOrIterator<T>): T | undefined
@@ -312,6 +352,11 @@ export const first: {
  *
  * The returned iterator may hold fewer than `count` values if the
  * iterator contains less items than `count`
+ *
+ * ## Example
+ * ```typescript
+ * take(2, [1, 2, 3]) // [1, 2]
+ * ```
  */
 export const take: {
   <T>(count: number, iterator: IterableOrIterator<T>): IterableIterator<T>
@@ -330,6 +375,11 @@ export const take: {
 
 /**
  * Returns the last value of the iterator or undefined if it's empty
+ *
+ * ## Example
+ * ```typescript
+ * last([1, 2, 3]) // 3
+ * ```
  */
 export const last: {
   <T>(iterator: IterableOrIterator<T>): T | undefined

@@ -75,6 +75,15 @@ describe('async', () => {
     })
   })
 
+  describe('fromPromise', () => {
+    it('should yield the value from the promise', async () => {
+      const iterator = subject.fromPromise(Promise.resolve(42))
+
+      expect(await iterator.next()).toEqual({done: false, value: 42})
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+  })
+
   describe('Subject', () => {
     it('should buffer items', async () => {
       const controller = new subject.Subject()
@@ -411,6 +420,28 @@ describe('async', () => {
     })
   })
 
+  describe('fold', () => {
+    it('should return the accumulated value', async () => {
+      const item = await subject.fold(
+        0,
+        (sum, item) => sum + item,
+        asAsync(1, 2, 3),
+      )
+
+      expect(item).toEqual(6)
+    })
+
+    it('should return the initial value if there are no items', async () => {
+      const item = await subject.fold(
+        0,
+        (sum, item) => sum + item,
+        asAsync<number>(),
+      )
+
+      expect(item).toEqual(0)
+    })
+  })
+
   describe('zip', () => {
     it('should zip two iterators', async () => {
       const iterator = subject
@@ -629,6 +660,26 @@ describe('async', () => {
       expect(await iterator.next()).toEqual({done: true, value: undefined})
     })
 
+    it('should return avalible items if n is greater than the size of the iterable', async () => {
+      const iterator = subject
+        .take(4, asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(await iterator.next()).toEqual({done: true, value: undefined})
+    })
+
     it('should be auto curried', async () => {
       const iterator = subject.take(2)(asAsync('one', 'two', 'three'))[
         Symbol.asyncIterator
@@ -637,6 +688,74 @@ describe('async', () => {
       expect(await iterator.next()).toEqual({
         done: false,
         value: 'one',
+      })
+    })
+  })
+
+  describe('takeUntil', () => {
+    it('should yield items until the notifier resolves', async () => {
+      const controller = new subject.Subject()
+      const iterator = subject
+        .takeUntil(controller, asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      controller.done()
+      expect(await iterator.next()).toEqual({
+        done: true,
+        value: {done: true, value: undefined},
+      })
+    })
+
+    it('should return the notifiers IteratorResult', async () => {
+      const controller = new subject.Subject()
+      const iterator = subject
+        .takeUntil(controller, asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      controller.next('end')
+      expect(await iterator.next()).toEqual({
+        done: true,
+        value: {done: false, value: 'end'},
+      })
+    })
+
+    it('should yield all items if the notifier does not resolve', async () => {
+      const controller = new subject.Subject()
+      const iterator = subject
+        .takeUntil(controller, asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(await iterator.next()).toEqual({
+        done: true,
+        value: undefined,
       })
     })
   })
