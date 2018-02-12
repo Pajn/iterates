@@ -348,6 +348,68 @@ export const first: {
 }
 
 /**
+ * Returns an iterator that provides all but the first count items.
+ *
+ * If the iterator has fewer than count items, then the resulting iterator is empty.
+ *
+ * The count must not be negative.
+ *
+ * ## Example
+ * ```typescript
+ * skip(2, [1, 2, 3]) // [3]
+ * ```
+ */
+export const skip: {
+  <T>(count: number, iterator: IterableOrIterator<T>): IterableIterator<T>
+  <T>(count: number): (iterator: IterableOrIterator<T>) => IterableIterator<T>
+} = curry(function* skip<T>(
+  count: number,
+  iterator: IterableOrIterator<T>,
+): IterableIterator<T> {
+  let index = 0
+  for (const item of asIterable(iterator)) {
+    if (index >= count) yield item
+    else index++
+  }
+})
+
+/**
+ * Returns an iterator that skips leading items while test is satisfied.
+ *
+ * The returned iterator yields items from the passed iterator,
+ * but skipping over all initial items where `test(item)` returns `true`.
+ * If all items satisfy test the resulting iterator is empty, otherwise
+ * it iterates the remaining items in their original order, starting with
+ * the first item for which `test(item)` returns `false`.
+ *
+ * ## Example
+ * ```typescript
+ * skipWhile(item => item < 3, [1, 2, 3]) // [3]
+ * ```
+ */
+export const skipWhile: {
+  <T>(
+    test: (item: T) => boolean,
+    iterator: IterableOrIterator<T>,
+  ): IterableIterator<T>
+  <T>(test: (item: T) => boolean): (
+    iterator: IterableOrIterator<T>,
+  ) => IterableIterator<T>
+} = curry(function* skipWhile<T>(
+  test: (item: T) => boolean,
+  iterator: IterableOrIterator<T>,
+): IterableIterator<T> {
+  let doYield = false
+  for (const item of asIterable(iterator)) {
+    if (doYield) yield item
+    else if (!test(item)) {
+      doYield = true
+      yield item
+    }
+  }
+})
+
+/**
  * Returns an iterator with the first count values of the iterator
  *
  * The returned iterator may hold fewer than `count` values if the
@@ -361,7 +423,7 @@ export const first: {
 export const take: {
   <T>(count: number, iterator: IterableOrIterator<T>): IterableIterator<T>
   <T>(count: number): (iterator: IterableOrIterator<T>) => IterableIterator<T>
-} = curry(function* find<T>(
+} = curry(function* take<T>(
   count: number,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -370,6 +432,35 @@ export const take: {
     if (index >= count) break
     yield item
     index++
+  }
+})
+
+/**
+ * Returns an iterator of the leading items satisfying test.
+ *
+ * The returned iterator will yield items from the passed iterator until
+ * test returns `false`. At that point, the returned iterator stops.
+ *
+ * ## Example
+ * ```typescript
+ * takeWhile(item => item < 3, [1, 2, 3]) // [1, 2]
+ * ```
+ */
+export const takeWhile: {
+  <T>(
+    test: (item: T) => boolean,
+    iterator: IterableOrIterator<T>,
+  ): IterableIterator<T>
+  <T>(test: (item: T) => boolean): (
+    iterator: IterableOrIterator<T>,
+  ) => IterableIterator<T>
+} = curry(function* takeWhile<T>(
+  test: (item: T) => boolean,
+  iterator: IterableOrIterator<T>,
+): IterableIterator<T> {
+  for (const item of asIterable(iterator)) {
+    if (!test(item)) break
+    yield item
   }
 })
 

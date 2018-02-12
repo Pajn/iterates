@@ -445,6 +445,114 @@ describe('sync', () => {
     })
   })
 
+  describe('skip', () => {
+    it('should skip the first n items', () => {
+      const iterator = subject
+        .skip(2, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return all items if skip is zero', () => {
+      const iterator = subject
+        .skip(0, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should no items if n is greater than the size of the iterable', () => {
+      const iterator = subject
+        .skip(4, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should be auto curried', () => {
+      const iterator = subject.skip(1)(['one', 'two', 'three'])[
+        Symbol.iterator
+      ]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+    })
+  })
+
+  describe('skipWhile', () => {
+    it('should skip the first items test returns true for', () => {
+      const iterator = subject
+        .skipWhile(item => item.length === 3, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return all items if test directly returns false', () => {
+      const iterator = subject
+        .skipWhile(() => false, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should no items if test always return true', () => {
+      const iterator = subject
+        .skipWhile(() => true, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should be auto curried', () => {
+      const iterator = subject.skipWhile(item => item === 'one')([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+    })
+  })
+
   describe('take', () => {
     it('should return the first n items', () => {
       const iterator = subject
@@ -486,6 +594,57 @@ describe('sync', () => {
       const iterator = subject.take(2)(['one', 'two', 'three'])[
         Symbol.iterator
       ]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+    })
+  })
+
+  describe('takeWhile', () => {
+    it('should return the first items test returns true for', () => {
+      const iterator = subject
+        .takeWhile(item => item.length === 3, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should return all items if test always return true', () => {
+      const iterator = subject
+        .takeWhile(() => true, ['one', 'two', 'three'])
+        [Symbol.iterator]()
+
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'one',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'two',
+      })
+      expect(iterator.next()).toEqual({
+        done: false,
+        value: 'three',
+      })
+      expect(iterator.next()).toEqual({done: true, value: undefined})
+    })
+
+    it('should be auto curried', () => {
+      const iterator = subject.takeWhile(item => item === 'one')([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
