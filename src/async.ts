@@ -1,6 +1,7 @@
 import curry from 'auto-curry'
 import {EventEmitter} from 'events'
 import {IterableOrIterator, asIterable as asSyncIterable} from './sync'
+import {curry2WithOptions} from './utils'
 
 if (Symbol.asyncIterator === undefined) {
   ;(Symbol as any).asyncIterator = Symbol()
@@ -233,7 +234,7 @@ export const enumerate: {
  *
  * ## Example
  * ```typescript
- * [...map(e => e*e), [1, 2, 3]] // [1, 4, 9]
+ * [...map(e => e*e, [1, 2, 3])] // [1, 4, 9]
  * ```
  */
 export const map: {
@@ -258,7 +259,7 @@ export const map: {
  *
  * ## Example
  * ```typescript
- * [...flatMap(e => e % 2 === 0 ? undefined : e*e), [1, 2, 3]] // [1, 9]
+ * [...flatMap(e => e % 2 === 0 ? undefined : e*e, [1, 2, 3])] // [1, 9]
  * ```
  *
  * ## Why not map(filter())?
@@ -291,7 +292,7 @@ export const filterMap: {
  *
  * ## Example
  * ```typescript
- * [...flatMap(e => [e, e*e]), [1, 2, 3]] // [1, 1, 2, 4, 3, 9]
+ * [...flatMap(e => [e, e*e], [1, 2, 3])] // [1, 1, 2, 4, 3, 9]
  * ```
  */
 export const flatMap: {
@@ -341,7 +342,7 @@ export const flatten: {
  *
  * ## Example
  * ```typescript
- * [...filter(e => e > 2), [1, 2, 3]] // [2, 3]
+ * [...filter(e => e > 2, [1, 2, 3])] // [2, 3]
  * ```
  */
 export const filter: {
@@ -396,6 +397,66 @@ export const fold: {
     value = combine(value, await item)
   }
   return value
+})
+
+/**
+ * Transforms an iterator into a Map.
+ *
+ * Calls `fn` for every item in the iterator. `fn` should return a tuple of `[key, value]`
+ * for that item.
+ *
+ * If multiple items returns the same key the latter will overwrite the former.
+ * This behavior can be changed by passing `merge` in the options object.
+ *
+ * `merge` takes the current value, the new value and the key and should return a combined
+ * value. It can also throw to dissallow multiple items returning the same key.
+ *
+ * ## Example
+ * ```typescript
+ * collect(e => [e, e*e], [1, 2, 3]) // Map {1 => 1, 2 => 4, 3 => 9}
+ * ```
+ *
+ * ### Using merge
+ * ```typescript
+ * collect(
+ *   e => [e % 2 === 0 ? 'even' : 'odd', [e]],
+ *   [1, 2, 3],
+ *   {merge: (a, b) => a.concat(b)}
+ * )
+ * // Map {'odd' => [1, 3], 'even' => [2]}
+ * ```
+ */
+export const collect: {
+  <T, U, K = string>(
+    fn: (item: T) => Awaitable<[K, U]>,
+    iterator: AsyncIterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): Promise<Map<K, U>>
+  <T, U, K = string>(
+    fn: (item: T) => Awaitable<[K, U]>,
+    options: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): (iterator: AsyncIterableOrIterator<T>) => Promise<Map<K, U>>
+  <T, U, K = string>(fn: (item: T) => Awaitable<[K, U]>): (
+    iterator: AsyncIterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ) => Promise<Map<K, U>>
+} = curry2WithOptions(async function collect<T, U, K = string>(
+  fn: (item: T) => Awaitable<[K, U]>,
+  iterator: AsyncIterableOrIterator<T>,
+  {merge}: {merge?: (currentValue: U, newValue: U, key: K) => U} = {},
+): Promise<Map<K, U>> {
+  const collection = new Map<K, U>()
+
+  for await (const item of asIterable(iterator)) {
+    const [key, value] = await fn(item)
+    if (merge !== undefined && collection.has(key)) {
+      collection.set(key, merge(collection.get(key)!, value, key))
+    } else {
+      collection.set(key, value)
+    }
+  }
+
+  return collection
 })
 
 /**

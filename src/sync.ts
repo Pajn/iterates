@@ -1,4 +1,5 @@
 import curry from 'auto-curry'
+import {curry2WithOptions} from './utils'
 
 /**
  * Either an Iterable (for example an Array) or an Iterator
@@ -266,6 +267,66 @@ export const fold: {
     value = combine(value, item)
   }
   return value
+})
+
+/**
+ * Transforms an iterator into a Map.
+ *
+ * Calls `fn` for every item in the iterator. `fn` should return a tuple of `[key, value]`
+ * for that item.
+ *
+ * If multiple items returns the same key the latter will overwrite the former.
+ * This behavior can be changed by passing `merge` in the options object.
+ *
+ * `merge` takes the current value, the new value and the key and should return a combined
+ * value. It can also throw to dissallow multiple items returning the same key.
+ *
+ * ## Example
+ * ```typescript
+ * collect(e => [e, e*e], [1, 2, 3]) // Map {1 => 1, 2 => 4, 3 => 9}
+ * ```
+ *
+ * ### Using merge
+ * ```typescript
+ * collect(
+ *   e => [e % 2 === 0 ? 'even' : 'odd', [e]],
+ *   [1, 2, 3],
+ *   {merge: (a, b) => a.concat(b)}
+ * )
+ * // Map {'odd' => [1, 3], 'even' => [2]}
+ * ```
+ */
+export const collect: {
+  <T, U, K = string>(
+    fn: (item: T) => [K, U],
+    iterator: IterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): Map<K, U>
+  <T, U, K = string>(
+    fn: (item: T) => [K, U],
+    options: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): (iterator: IterableOrIterator<T>) => Map<K, U>
+  <T, U, K = string>(fn: (item: T) => [K, U]): (
+    iterator: IterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ) => Map<K, U>
+} = curry2WithOptions(function collect<T, U, K = string>(
+  fn: (item: T) => [K, U],
+  iterator: IterableOrIterator<T>,
+  {merge}: {merge?: (currentValue: U, newValue: U, key: K) => U} = {},
+): Map<K, U> {
+  const collection = new Map<K, U>()
+
+  for (const item of asIterable(iterator)) {
+    const [key, value] = fn(item)
+    if (merge !== undefined && collection.has(key)) {
+      collection.set(key, merge(collection.get(key)!, value, key))
+    } else {
+      collection.set(key, value)
+    }
+  }
+
+  return collection
 })
 
 /**

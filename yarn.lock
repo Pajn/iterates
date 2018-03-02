@@ -35,6 +35,12 @@
   version "20.0.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.4.tgz#91e2c76fbe90b3a719b5d689958f0495f005beb9"
 
+"@types/jss@^9.3.0":
+  version "9.5.0"
+  resolved "https://registry.yarnpkg.com/@types/jss/-/jss-9.5.0.tgz#65d9b5c61f1e95ad3acd53e9a8b2d2342aa917e8"
+  dependencies:
+    csstype "^1.6.0"
+
 "@types/node@*":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
@@ -69,6 +75,12 @@
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.20.tgz#3404f54e44bba2239ea4320ea701d86d92f05486"
   dependencies:
     "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-transition-group@^2.0.6":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-2.0.7.tgz#2847292d54c5685d982ae5a3ecb6960946689d87"
+  dependencies:
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.0.34":
@@ -2301,14 +2313,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.6.0:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 cross-spawn@5.1.0, cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -2502,6 +2506,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-0.2.37.tgz#541097234cb2513c83ceed3acddc27ff27987d54"
   dependencies:
     cssom "0.3.x"
+
+csstype@^1.6.0:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-1.8.1.tgz#90c57913cabd3a6e53140f3545593729e6a80cf6"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -2758,9 +2766,9 @@ doctrine@^2.0.0:
   dependencies:
     esutils "^2.0.2"
 
-documittu-analyzer-ts@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.3.0.tgz#0995e80c5496d205cacf97e56c93b3e8dae5e252"
+documittu-analyzer-ts@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.3.2.tgz#e8c64a871521b674a19911553ef6658869097fe0"
   dependencies:
     "@types/node" "^8.5.5"
     glob "^7.1.2"
@@ -2775,9 +2783,9 @@ documittu-markdown-loader@^0.3.0:
     node-prismjs "^0.1.0"
     remarkable "^1.6.2"
 
-documittu-template-default@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/documittu-template-default/-/documittu-template-default-0.3.0.tgz#55486c78a922509919c23d709ab2ad60388d26d7"
+documittu-template-default@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/documittu-template-default/-/documittu-template-default-0.3.2.tgz#a9d2171984f4758274fb22489c02dbd2e720023c"
   dependencies:
     "@types/react" "^16.0.34"
     "@types/react-document-title" "^2.0.1"
@@ -2787,26 +2795,26 @@ documittu-template-default@^0.3.0:
     "@types/webpack" "^3.0.10"
     "@types/webpack-env" "^1.13.3"
     babel-polyfill "^6.23.0"
-    documittu-analyzer-ts "^0.3.0"
+    documittu-analyzer-ts "^0.3.2"
     glamor "^2.20.40"
     glamorous "^4.11.2"
     material-definitions "^0.3.3"
-    material-ui "^1.0.0-beta.26"
+    material-ui "^1.0.0-beta.31"
     prism-react "^1.0.1"
-    react "^15.4.2"
+    react "^16.2.0"
     react-document-title "^2.0.2"
-    react-dom "^15.4.2"
+    react-dom "^16.2.0"
     react-markdown "^3.1.4"
     react-prism "^4.3.2"
     react-router "^4.0.0"
     react-router-dom "^4.0.0"
     recompose "^0.26.0"
     style-definitions "^0.1.4"
-    styled-components "^2.4.0"
+    styled-components "^3.1.5"
 
-documittu@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/documittu/-/documittu-0.3.0.tgz#c16011baceb0ac1abfa5df9bdc3e0600d592da5c"
+documittu@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/documittu/-/documittu-0.3.2.tgz#d57cd3439052a2454d11ec2e3fd673bb451af6b5"
   dependencies:
     "@types/node" "^8.5.5"
     "@types/react" "^16.0.34"
@@ -2824,7 +2832,7 @@ documittu@^0.3.0:
     cross-spawn "^5.1.0"
     css-loader "0.28.4"
     documittu-markdown-loader "^0.3.0"
-    documittu-template-default "^0.3.0"
+    documittu-template-default "^0.3.2"
     dotenv "4.0.0"
     extract-text-webpack-plugin "3.0.0"
     file-loader "0.11.2"
@@ -2835,8 +2843,8 @@ documittu@^0.3.0:
     react-dev-utils "4.1.0"
     react-scripts "^1.0.17"
     style-loader "0.19.0"
-    ts-loader "3.1.0"
-    typescript "2.7.0-dev.20180111"
+    ts-loader "3.4.0"
+    typescript "2.7.1"
     url-loader "0.6.2"
     webpack "3.5.1"
     webpack-dev-server "2.8.2"
@@ -6508,10 +6516,12 @@ material-definitions@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/material-definitions/-/material-definitions-0.3.3.tgz#fa275abf001433e4839ec756f82bf0bb6b55612a"
 
-material-ui@^1.0.0-beta.26:
-  version "1.0.0-beta.27"
-  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.27.tgz#f3073b7acffebd1fc6d0339a3260d4555445daf7"
+material-ui@^1.0.0-beta.31:
+  version "1.0.0-beta.35"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.35.tgz#eeac6be307c0469943c7686e5c6bd4eaa6b1b563"
   dependencies:
+    "@types/jss" "^9.3.0"
+    "@types/react-transition-group" "^2.0.6"
     babel-runtime "^6.26.0"
     brcast "^3.0.1"
     classnames "^2.2.5"
@@ -6531,11 +6541,11 @@ material-ui@^1.0.0-beta.26:
     prop-types "^15.6.0"
     react-event-listener "^0.5.1"
     react-jss "^8.1.0"
-    react-popper "^0.7.4"
+    react-popper "^0.8.0"
     react-scrollbar-size "^2.0.2"
     react-transition-group "^2.2.1"
     recompose "^0.26.0"
-    scroll "^2.0.1"
+    scroll "^2.0.3"
     warning "^3.0.0"
 
 math-clamp-x@^1.2.0:
@@ -7502,7 +7512,7 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
-popper.js@^1.12.5:
+popper.js@^1.12.9:
   version "1.12.9"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
 
@@ -8119,7 +8129,7 @@ react-document-title@^2.0.2:
     prop-types "^15.5.6"
     react-side-effect "^1.0.2"
 
-"react-dom@^15 || ^16":
+"react-dom@^15 || ^16", react-dom@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
   dependencies:
@@ -8127,15 +8137,6 @@ react-document-title@^2.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react-dom@^15.4.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.10"
 
 react-error-overlay@^2.0.2:
   version "2.0.2"
@@ -8189,12 +8190,12 @@ react-markdown@^3.1.4:
     unist-util-visit "^1.1.3"
     xtend "^4.0.1"
 
-react-popper@^0.7.4:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.7.5.tgz#71c25946f291db381231281f6b95729e8b801596"
+react-popper@^0.8.0:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.8.2.tgz#092095ff13933211d3856d9f325511ec3a42f12c"
   dependencies:
-    popper.js "^1.12.5"
-    prop-types "^15.5.10"
+    popper.js "^1.12.9"
+    prop-types "^15.6.0"
 
 react-prism@^4.3.2:
   version "4.3.2"
@@ -8292,7 +8293,7 @@ react-transition-group@^2.2.1:
     prop-types "^15.5.8"
     warning "^3.0.0"
 
-"react@^15 || ^16":
+"react@^15 || ^16", react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:
@@ -8300,16 +8301,6 @@ react-transition-group@^2.2.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react@^15.4.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
-  dependencies:
-    create-react-class "^15.6.0"
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.10"
 
 read-all-stream@^3.0.0:
   version "3.1.0"
@@ -8868,9 +8859,9 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scroll@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/scroll/-/scroll-2.0.1.tgz#b4c7d27e8bcf3ae8a58a042f27268ae3f55f9ccd"
+scroll@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/scroll/-/scroll-2.0.3.tgz#0951b785544205fd17753bc3d294738ba16fc2ab"
   dependencies:
     rafl "~1.2.1"
 
@@ -9418,9 +9409,9 @@ style-loader@0.19.0:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
 
-styled-components@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.4.0.tgz#086d0fd483d54638837fca3ea546a030b94adf75"
+styled-components@^3.1.5:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.1.6.tgz#9c443146fa82c6659a9f64dd493bf2202480342e"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
@@ -9429,7 +9420,12 @@ styled-components@^2.4.0:
     is-plain-object "^2.0.1"
     prop-types "^15.5.4"
     stylis "^3.4.0"
+    stylis-rule-sheet "^0.0.7"
     supports-color "^3.2.3"
+
+stylis-rule-sheet@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.7.tgz#5c51dc879141a61821c2094ba91d2cbcf2469c6c"
 
 stylis@^3.4.0:
   version "3.4.8"
@@ -9864,15 +9860,6 @@ trough@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trough/-/trough-1.0.1.tgz#a9fd8b0394b0ae8fff82e0633a0a36ccad5b5f86"
 
-ts-loader@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.1.0.tgz#d59bed512ee1dfc2636184f437714baad08c7ca1"
-  dependencies:
-    chalk "^2.3.0"
-    enhanced-resolve "^3.0.0"
-    loader-utils "^1.0.2"
-    semver "^5.0.1"
-
 ts-loader@3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.4.0.tgz#c376bc0538d4c441ea8790c3fd841ebfdbfb99d0"
@@ -10016,11 +10003,7 @@ typescript-babel-jest@1.0.5:
     babel-jest "20.0.3"
     typescript "^2.4.1"
 
-typescript@2.7.0-dev.20180111:
-  version "2.7.0-dev.20180111"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20180111.tgz#9d8114598082059d1aaaafdcb9180ee00098ba58"
-
-typescript@^2.4.1, typescript@~2.7.1:
+typescript@2.7.1, typescript@^2.4.1, typescript@~2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.1.tgz#bb3682c2c791ac90e7c6210b26478a8da085c359"
 

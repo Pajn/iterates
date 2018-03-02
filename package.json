@@ -18,9 +18,9 @@
   "devDependencies": {
     "@types/jest": "^20.0.4",
     "coveralls": "^2.13.1",
-    "documittu": "^0.3.0",
-    "documittu-analyzer-ts": "^0.3.0",
-    "documittu-template-default": "^0.3.0",
+    "documittu": "^0.3.2",
+    "documittu-analyzer-ts": "^0.3.2",
+    "documittu-template-default": "^0.3.2",
     "prettier": "^1.5.3",
     "tscomp": "^0.14.2",
     "tslint": "^5.5.0",

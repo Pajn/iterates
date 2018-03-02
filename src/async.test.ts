@@ -1,4 +1,5 @@
 import {setImmediate} from 'timers'
+import {tuple} from '.'
 import * as subject from './async'
 import {Awaitable} from './async'
 
@@ -439,6 +440,51 @@ describe('async', () => {
       )
 
       expect(item).toEqual(0)
+    })
+  })
+
+  describe('collect', () => {
+    it('should collect the values of the iterator in a map', async () => {
+      const map = await subject.collect(
+        item => [item, item ** 2],
+        asAsync(1, 2, 3),
+      )
+      expect(map).toEqual(new Map([[1, 1], [2, 4], [3, 9]]))
+    })
+
+    it('should overwrite duplicate keys', async () => {
+      const map = await subject.collect(
+        item => [item ** 2, item],
+        asAsync(1, 2, 3, -2),
+      )
+      expect(map).toEqual(new Map([[1, 1], [4, -2], [9, 3]]))
+    })
+
+    it('should support a custom merge function', async () => {
+      const map = await subject.collect(
+        item => [item ** 2, item],
+        asAsync(1, 2, 3, -2),
+        {
+          merge: (a, b) => a + b,
+        },
+      )
+      expect(map).toEqual(new Map([[1, 1], [4, 0], [9, 3]]))
+    })
+
+    it('should be auto curried', async () => {
+      const collectFn = (item: number) => tuple([item ** 2, item])
+      const values = () => asAsync(1, 2, 3, -2)
+      const options = {merge: (a, b) => a + b}
+      const result = new Map([[1, 1], [4, 0], [9, 3]])
+
+      const map1 = await subject.collect(collectFn, values(), options)
+      expect(map1).toEqual(result)
+
+      const map2 = await subject.collect(collectFn)(values(), options)
+      expect(map2).toEqual(result)
+
+      const map3 = await subject.collect(collectFn, options)(values())
+      expect(map3).toEqual(result)
     })
   })
 
