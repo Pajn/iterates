@@ -11,6 +11,7 @@
     "async",
     "typescript"
   ],
+  "sideEffects": false,
   "dependencies": {
     "auto-curry": "^0.2.1",
     "babel-runtime": "^6.26.0"
