@@ -1,0 +1,19 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "documittu-analyzer-ts": "0.4.1",
+    "documittu-template-default": "0.5.0",
+    "next": "^7.0.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  },
+  "scripts": {
+    "start": "next",
+    "build": "yarn analyze && next export",
+    "analyze": "documittu-analyzer-ts .. > ./analyze-result.json"
+  }
+}

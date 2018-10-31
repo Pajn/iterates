@@ -1,4 +1,3 @@
-import {setImmediate} from 'timers'
 import {tuple} from '.'
 import * as subject from './async'
 import {Awaitable} from './async'
@@ -225,9 +224,11 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.map((item: string) => item.toUpperCase())(
-        asAsync('one', 'two', 'three'),
-      )[Symbol.asyncIterator]()
+      const iterator = subject
+        .map((item: string) => item.toUpperCase())(
+          asAsync('one', 'two', 'three'),
+        )
+        [Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -257,9 +258,12 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.filterMap(
-        (item: string) => (item.length === 3 ? item.toUpperCase() : undefined),
-      )(asAsync('one', 'two', 'three'))[Symbol.asyncIterator]()
+      const iterator = subject
+        .filterMap(
+          (item: string) =>
+            item.length === 3 ? item.toUpperCase() : undefined,
+        )(asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -309,9 +313,11 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.flatMap((item: string) =>
-        asAsync(item, item.toUpperCase()),
-      )(asAsync('one', 'two', 'three'))[Symbol.asyncIterator]()
+      const iterator = subject
+        .flatMap((item: string) => asAsync(item, item.toUpperCase()))(
+          asAsync('one', 'two', 'three'),
+        )
+        [Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -410,9 +416,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.filter(item => item !== 'two')(
-        asAsync('one', 'two', 'three'),
-      )[Symbol.asyncIterator]()
+      const iterator = subject
+        .filter(item => item !== 'two')(asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -557,7 +563,7 @@ describe('async', () => {
 
     async function setTime(time: number) {
       // First, force a spin of the event loop
-      await new Promise(resolve => setImmediate(resolve))
+      await new Promise(resolve => setTimeout(resolve))
       nowMock.mockReturnValue(time)
     }
 
@@ -727,9 +733,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.take(2)(asAsync('one', 'two', 'three'))[
-        Symbol.asyncIterator
-      ]()
+      const iterator = subject
+        .take(2)(asAsync('one', 'two', 'three'))
+        [Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
