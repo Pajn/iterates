@@ -224,11 +224,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject
-        .map((item: string) => item.toUpperCase())(
-          asAsync('one', 'two', 'three'),
-        )
-        [Symbol.asyncIterator]()
+      const iterator = subject.map((item: string) => item.toUpperCase())(
+        asAsync('one', 'two', 'three'),
+      )[Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -258,12 +256,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject
-        .filterMap(
-          (item: string) =>
-            item.length === 3 ? item.toUpperCase() : undefined,
-        )(asAsync('one', 'two', 'three'))
-        [Symbol.asyncIterator]()
+      const iterator = subject.filterMap(
+        (item: string) => (item.length === 3 ? item.toUpperCase() : undefined),
+      )(asAsync('one', 'two', 'three'))[Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -313,11 +308,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject
-        .flatMap((item: string) => asAsync(item, item.toUpperCase()))(
-          asAsync('one', 'two', 'three'),
-        )
-        [Symbol.asyncIterator]()
+      const iterator = subject.flatMap((item: string) =>
+        asAsync(item, item.toUpperCase()),
+      )(asAsync('one', 'two', 'three'))[Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -416,9 +409,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject
-        .filter(item => item !== 'two')(asAsync('one', 'two', 'three'))
-        [Symbol.asyncIterator]()
+      const iterator = subject.filter(item => item !== 'two')(
+        asAsync('one', 'two', 'three'),
+      )[Symbol.asyncIterator]()
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -490,6 +483,51 @@ describe('async', () => {
       expect(map2).toEqual(result)
 
       const map3 = await subject.collect(collectFn, options)(values())
+      expect(map3).toEqual(result)
+    })
+  })
+
+  describe('collectRecord', () => {
+    it('should collect the values of the iterator in a map', async () => {
+      const map = await subject.collectRecord(
+        item => [`${item}`, item ** 2],
+        asAsync(1, 2, 3),
+      )
+      expect(map).toEqual({1: 1, 2: 4, 3: 9})
+    })
+
+    it('should overwrite duplicate keys', async () => {
+      const map = await subject.collectRecord(
+        item => [`${item ** 2}`, item],
+        asAsync(1, 2, 3, -2),
+      )
+      expect(map).toEqual({1: 1, 4: -2, 9: 3})
+    })
+
+    it('should support a custom merge function', async () => {
+      const map = await subject.collectRecord(
+        item => [`${item ** 2}`, item],
+        asAsync(1, 2, 3, -2),
+        {
+          merge: (a, b) => a + b,
+        },
+      )
+      expect(map).toEqual({1: 1, 4: 0, 9: 3})
+    })
+
+    it('should be auto curried', async () => {
+      const collectFn = (item: number) => tuple([`${item ** 2}`, item])
+      const values = () => asAsync(1, 2, 3, -2)
+      const options = {merge: (a, b) => a + b}
+      const result = {1: 1, 4: 0, 9: 3}
+
+      const map1 = await subject.collectRecord(collectFn, values(), options)
+      expect(map1).toEqual(result)
+
+      const map2 = await subject.collectRecord(collectFn)(values(), options)
+      expect(map2).toEqual(result)
+
+      const map3 = await subject.collectRecord(collectFn, options)(values())
       expect(map3).toEqual(result)
     })
   })
@@ -648,6 +686,84 @@ describe('async', () => {
     })
   })
 
+  describe('all', () => {
+    it('should return false if any item fails the test', async () => {
+      const test1 = await subject.all(
+        item => item.length === 3,
+        asAsync('one', 'two', 'three'),
+      )
+      const test2 = await subject.all(
+        item => item.length === 5,
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test1).toBe(false)
+      expect(test2).toBe(false)
+    })
+
+    it('should return true if all items pass the test', async () => {
+      const test = await subject.all(
+        item => item.length !== 4,
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test).toBe(true)
+    })
+
+    it('should return true if the iterator is empty', async () => {
+      const test = await subject.all(item => item, asAsync())
+
+      expect(test).toBe(true)
+    })
+
+    it('should be auto curried', async () => {
+      const test = await subject.all((item: string) => item.length === 3)(
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test).toBe(false)
+    })
+  })
+
+  describe('any', () => {
+    it('should return true if any item pass the test', async () => {
+      const test1 = await subject.any(
+        item => item.length === 3,
+        asAsync('one', 'two', 'three'),
+      )
+      const test2 = await subject.any(
+        item => item.length === 5,
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test1).toBe(true)
+      expect(test2).toBe(true)
+    })
+
+    it('should return true if all items fails the test', async () => {
+      const test = await subject.any(
+        item => item.length === 4,
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test).toBe(false)
+    })
+
+    it('should return false if the iterator is empty', async () => {
+      const test = await subject.any(item => item, asAsync())
+
+      expect(test).toBe(false)
+    })
+
+    it('should be auto curried', async () => {
+      const test = await subject.any((item: string) => item.length === 3)(
+        asAsync('one', 'two', 'three'),
+      )
+
+      expect(test).toBe(true)
+    })
+  })
+
   describe('find', () => {
     it('should return the first item that pass the test', async () => {
       const item = await subject.find(
@@ -733,9 +849,9 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject
-        .take(2)(asAsync('one', 'two', 'three'))
-        [Symbol.asyncIterator]()
+      const iterator = subject.take(2)(asAsync('one', 'two', 'three'))[
+        Symbol.asyncIterator
+      ]()
 
       expect(await iterator.next()).toEqual({
         done: false,

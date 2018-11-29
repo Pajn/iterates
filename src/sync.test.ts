@@ -163,9 +163,11 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .map((item: string) => item.toUpperCase())(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.map((item: string) => item.toUpperCase())([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -195,12 +197,9 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .filterMap(
-          (item: string) =>
-            item.length === 3 ? item.toUpperCase() : undefined,
-        )(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.filterMap(
+        (item: string) => (item.length === 3 ? item.toUpperCase() : undefined),
+      )(['one', 'two', 'three'])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -243,13 +242,10 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .flatMap((item: string) => [item, item.toUpperCase()])([
-          'one',
-          'two',
-          'three',
-        ])
-        [Symbol.iterator]()
+      const iterator = subject.flatMap((item: string) => [
+        item,
+        item.toUpperCase(),
+      ])(['one', 'two', 'three'])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -310,9 +306,11 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .filter(item => item !== 'two')(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.filter(item => item !== 'two')([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -366,6 +364,54 @@ describe('sync', () => {
       expect(map2).toEqual(result)
 
       const map3 = subject.collect(collectFn, options)(values)
+      expect(map3).toEqual(result)
+    })
+  })
+
+  describe('collectRecord', () => {
+    it('should collect the values of the iterator in a map', () => {
+      const map = subject.collectRecord(item => [`${item}`, item ** 2], [
+        1,
+        2,
+        3,
+      ])
+      expect(map).toEqual({1: 1, 2: 4, 3: 9})
+    })
+
+    it('should overwrite duplicate keys', () => {
+      const map = subject.collectRecord(item => [`${item ** 2}`, item], [
+        1,
+        2,
+        3,
+        -2,
+      ])
+      expect(map).toEqual({1: 1, 4: -2, 9: 3})
+    })
+
+    it('should support a custom merge function', () => {
+      const map = subject.collectRecord(
+        item => [`${item ** 2}`, item],
+        [1, 2, 3, -2],
+        {
+          merge: (a, b) => a + b,
+        },
+      )
+      expect(map).toEqual({1: 1, 4: 0, 9: 3})
+    })
+
+    it('should be auto curried', () => {
+      const collectFn = (item: number) => tuple([`${item ** 2}`, item])
+      const values = [1, 2, 3, -2]
+      const options = {merge: (a, b) => a + b}
+      const result = {1: 1, 4: 0, 9: 3}
+
+      const map1 = subject.collectRecord(collectFn, values, options)
+      expect(map1).toEqual(result)
+
+      const map2 = subject.collectRecord(collectFn)(values, options)
+      expect(map2).toEqual(result)
+
+      const map3 = subject.collectRecord(collectFn, options)(values)
       expect(map3).toEqual(result)
     })
   })
@@ -428,6 +474,94 @@ describe('sync', () => {
       })
       const doneB = iteratorB.next()
       expect(doneB).toEqual({done: true, value: longB})
+    })
+  })
+
+  describe('all', () => {
+    it('should return false if any item fails the test', () => {
+      const test1 = subject.all(item => item.length === 3, [
+        'one',
+        'two',
+        'three',
+      ])
+      const test2 = subject.all(item => item.length === 5, [
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test1).toBe(false)
+      expect(test2).toBe(false)
+    })
+
+    it('should return true if all items pass the test', () => {
+      const test = subject.all(item => item.length !== 4, [
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test).toBe(true)
+    })
+
+    it('should return true if the iterator is empty', () => {
+      const test = subject.all(item => item === 4, [])
+
+      expect(test).toBe(true)
+    })
+
+    it('should be auto curried', () => {
+      const test = subject.all((item: string) => item.length === 3)([
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test).toBe(false)
+    })
+  })
+
+  describe('any', () => {
+    it('should return true if any item pass the test', () => {
+      const test1 = subject.any(item => item.length === 3, [
+        'one',
+        'two',
+        'three',
+      ])
+      const test2 = subject.any(item => item.length === 5, [
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test1).toBe(true)
+      expect(test2).toBe(true)
+    })
+
+    it('should return true if all items fails the test', () => {
+      const test = subject.any(item => item.length === 4, [
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test).toBe(false)
+    })
+
+    it('should return false if the iterator is empty', () => {
+      const test = subject.any(item => item === 4, [])
+
+      expect(test).toBe(false)
+    })
+
+    it('should be auto curried', () => {
+      const test = subject.any((item: string) => item.length === 3)([
+        'one',
+        'two',
+        'three',
+      ])
+
+      expect(test).toBe(true)
     })
   })
 
@@ -525,9 +659,9 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .skip(1)(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.skip(1)(['one', 'two', 'three'])[
+        Symbol.iterator
+      ]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -578,9 +712,11 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .skipWhile(item => item === 'one')(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.skipWhile(item => item === 'one')([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -627,9 +763,9 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .take(2)(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.take(2)(['one', 'two', 'three'])[
+        Symbol.iterator
+      ]()
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -676,9 +812,11 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject
-        .takeWhile(item => item === 'one')(['one', 'two', 'three'])
-        [Symbol.iterator]()
+      const iterator = subject.takeWhile(item => item === 'one')([
+        'one',
+        'two',
+        'three',
+      ])[Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
         done: false,

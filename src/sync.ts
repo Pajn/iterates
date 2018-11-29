@@ -83,7 +83,7 @@ export function* range({
  * ```
  */
 export const enumerate: {
-  <T>(Iterator: IterableOrIterator<T>): IterableIterator<{
+  <T>(iterator: IterableOrIterator<T>): IterableIterator<{
     index: number
     item: T
   }>
@@ -330,6 +330,66 @@ export const collect: {
 })
 
 /**
+ * Transforms an iterator into an Object.
+ *
+ * Calls `fn` for every item in the iterator. `fn` should return a tuple of `[key, value]`
+ * for that item.
+ *
+ * If multiple items returns the same key the latter will overwrite the former.
+ * This behavior can be changed by passing `merge` in the options object.
+ *
+ * `merge` takes the current value, the new value and the key and should return a combined
+ * value. It can also throw to dissallow multiple items returning the same key.
+ *
+ * ## Example
+ * ```typescript
+ * collectRecord(e => [e, e*e], [1, 2, 3]) // {1: 1, 2: 4, 3: 9}
+ * ```
+ *
+ * ### Using merge
+ * ```typescript
+ * collect(
+ *   e => [e % 2 === 0 ? 'even' : 'odd', [e]],
+ *   [1, 2, 3],
+ *   {merge: (a, b) => a.concat(b)}
+ * )
+ * // {odd: [1, 3], even: [2]}
+ * ```
+ */
+export const collectRecord: {
+  <T, U, K extends string>(
+    fn: (item: T) => [K, U],
+    iterator: IterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): Record<K, U>
+  <T, U, K extends string>(
+    fn: (item: T) => [K, U],
+    options: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ): (iterator: IterableOrIterator<T>) => Record<K, U>
+  <T, U, K extends string>(fn: (item: T) => [K, U]): (
+    iterator: IterableOrIterator<T>,
+    options?: {merge?: (currentValue: U, newValue: U, key: K) => U},
+  ) => Record<K, U>
+} = curry2WithOptions(function collect<T, U, K extends string>(
+  fn: (item: T) => [K, U],
+  iterator: IterableOrIterator<T>,
+  {merge}: {merge?: (currentValue: U, newValue: U, key: K) => U} = {},
+): Record<K, U> {
+  const record: Record<K, U> = {} as any
+
+  for (const item of asIterable(iterator)) {
+    const [key, value] = fn(item)
+    if (merge !== undefined && key in record) {
+      record[key] = merge(record[key], value, key)
+    } else {
+      record[key] = value
+    }
+  }
+
+  return record
+})
+
+/**
  * Zips two iterators by taking the next value of each iterator as a tuple
  *
  * If the two iterators have a different length, it will zip until the first iterator ends
@@ -367,25 +427,82 @@ export const zip: {
 })
 
 /**
+ * Returns true if fn returns true for every item in the iterator
+ *
+ * Returns true if the iterator is empty
+ *
+ * ## Example
+ * ```typescript
+ * all(e => e > 1, [1, 2, 3]) // false
+ * all(e => e > 0, [1, 2, 3]) // true
+ * all(e => e > 1, [])        // true
+ * ```
+ */
+export const all: {
+  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
+  <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
+} = curry(function all<T>(
+  fn: (item: T) => boolean,
+  iterator: IterableOrIterator<T>,
+): boolean {
+  for (const item of asIterable(iterator)) {
+    if (!fn(item)) {
+      return false
+    }
+  }
+
+  return true
+})
+
+/**
+ * Returns true if fn returns true for any item in the iterator
+ *
+ * Returns false if the iterator is empty
+ *
+ * ## Example
+ * ```typescript
+ * any(e => e > 1, [1, 2, 3]) // true
+ * any(e => e > 3, [1, 2, 3]) // false
+ * any(e => e > 1, [])        // false
+ * ```
+ */
+// tslint:disable-next-line:variable-name
+export const any: {
+  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
+  <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
+} = curry(function any<T>(
+  fn: (item: T) => boolean,
+  iterator: IterableOrIterator<T>,
+): boolean {
+  for (const item of asIterable(iterator)) {
+    if (fn(item)) {
+      return true
+    }
+  }
+
+  return false
+})
+
+/**
  * Calls fn for every item and returns the first item for which fn returns true
  *
  * Returns undefined if fn return fals for all items or if the iterator is empty
  *
  * ## Example
  * ```typescript
- * [...find(e => e > 1, [1, 2, 3])] // 2
+ * find(e => e > 1, [1, 2, 3]) // 2
  * ```
  */
 export const find: {
-  <T>(fn: (item: T) => boolean, Iterator: IterableOrIterator<T>): T | undefined
+  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): T | undefined
   <T>(fn: (item: T) => boolean): (
-    Iterator: IterableOrIterator<T>,
+    iterator: IterableOrIterator<T>,
   ) => T | undefined
 } = curry(function find<T>(
   fn: (item: T) => boolean,
-  Iterator: IterableOrIterator<T>,
+  iterator: IterableOrIterator<T>,
 ): T | undefined {
-  for (const item of asIterable(Iterator)) {
+  for (const item of asIterable(iterator)) {
     if (fn(item)) {
       return item
     }
