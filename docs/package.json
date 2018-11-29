@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "next",
-    "build": "yarn analyze && next export",
+    "build": "yarn analyze && next build && next export",
     "analyze": "documittu-analyzer-ts .. > ./analyze-result.json"
   }
 }
