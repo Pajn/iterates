@@ -1,9 +1,12 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "0.3.8",
+  "version": "1.0.1",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
-  "repository": "Pajn/iterates",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Pajn/iterates.git"
+  },
   "homepage": "https://pajn.github.io/iterates",
   "keywords": [
     "iterator",
