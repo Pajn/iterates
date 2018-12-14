@@ -15,4 +15,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+tsconfig.json
+tslint.json
+yarn.lock
+/docs
+.vscode

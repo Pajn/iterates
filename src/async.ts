@@ -630,7 +630,7 @@ export const all: {
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<boolean> {
   for await (const item of asIterable(asyncIterator)) {
-    if (!await fn(item)) {
+    if (!(await fn(item))) {
       return false
     }
   }
@@ -742,11 +742,12 @@ export const take: {
   count: number,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<T> {
+  if (count <= 0) return
   let index = 0
   for await (const item of asIterable(asyncIterator)) {
-    if (index >= count) break
     yield item
     index++
+    if (index >= count) break
   }
 })
 
