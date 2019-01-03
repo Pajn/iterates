@@ -270,6 +270,39 @@ export const fold: {
 })
 
 /**
+ * Like fold, scan iteratively combines each item of the iterator with
+ * an existing value. Scan does however yield each intermediate value.
+ *
+ * If the iterator is empty, no value is yielded.
+ *
+ * ## Example
+ * ```typescript
+ * scan(0, (sum, item) => sum + item, [1, 2, 3]) // [1, 3, 6]
+ * ```
+ */
+export const scan: {
+  <T, U>(
+    initialValue: U,
+    combine: (previousItem: U, item: T) => U,
+    iterator: IterableOrIterator<T>,
+  ): IterableIterator<U>
+  <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
+    iterator: IterableOrIterator<T>,
+  ) => IterableIterator<U>
+} = curry(function* scan<T, U>(
+  initialValue: U,
+  combine: (previousItem: U, item: T) => U,
+  iterator: IterableOrIterator<T>,
+): IterableIterator<U> {
+  let value = initialValue
+  for (const item of asIterable(iterator)) {
+    value = combine(value, item)
+    yield value
+  }
+  return value
+})
+
+/**
  * Transforms an iterator into a Map.
  *
  * Calls `fn` for every item in the iterator. `fn` should return a tuple of `[key, value]`

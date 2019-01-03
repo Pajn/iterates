@@ -1,3 +1,7 @@
+# 1.0.2
+
+- Add `scan`
+
 # 1.0.1
 
 - Bugfix: `async/take` did not end its iterator after taking the requested number of values

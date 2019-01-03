@@ -446,6 +446,55 @@ describe('async', () => {
 
       expect(item).toEqual(0)
     })
+
+    it('should be auto curried', async () => {
+      const item = await subject.fold(0, (sum, item: number) => sum + item)(
+        asAsync(1, 2, 3),
+      )
+
+      expect(item).toEqual(6)
+    })
+  })
+
+  describe('scan', () => {
+    it('should return the accumulated value', async () => {
+      const iterator = await subject
+        .scan(0, (sum, item) => sum + item, asAsync(1, 2, 3))
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 3,
+      })
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 6,
+      })
+      expect(await iterator.next()).toEqual({done: true, value: 6})
+    })
+
+    it('should return the initial value if there are no items', async () => {
+      const iterator = await subject
+        .scan(0, (sum, item) => sum + item, asAsync<number>())
+        [Symbol.asyncIterator]()
+
+      expect(await iterator.next()).toEqual({done: true, value: 0})
+    })
+
+    it('should be auto curried', async () => {
+      const iterator = subject.scan(0, (sum, item: number) => sum + item)(
+        asAsync(1, 2, 3),
+      )
+
+      expect(await iterator.next()).toEqual({
+        done: false,
+        value: 1,
+      })
+    })
   })
 
   describe('collect', () => {
