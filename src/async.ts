@@ -645,9 +645,9 @@ export const throttle: {
  *
  * ## Example
  * ```typescript
- * all(e => e > 1, [1, 2, 3]) // false
- * all(e => e > 0, [1, 2, 3]) // true
- * all(e => e > 1, [])        // true
+ * await all(e => e > 1, [1, 2, 3]) // false
+ * await all(e => e > 0, [1, 2, 3]) // true
+ * await all(e => e > 1, [])        // true
  * ```
  */
 export const all: {
@@ -678,9 +678,9 @@ export const all: {
  *
  * ## Example
  * ```typescript
- * any(e => e > 1, [1, 2, 3]) // true
- * any(e => e > 3, [1, 2, 3]) // false
- * any(e => e > 1, [])        // false
+ * await any(e => e > 1, [1, 2, 3]) // true
+ * await any(e => e > 3, [1, 2, 3]) // false
+ * await any(e => e > 1, [])        // false
  * ```
  */
 // tslint:disable-next-line:variable-name
@@ -712,7 +712,7 @@ export const any: {
  *
  * ## Example
  * ```typescript
- * find(e => e > 1, [1, 2, 3]) // 2
+ * await find(e => e > 1, [1, 2, 3]) // 2
  * ```
  */
 export const find: {
@@ -735,11 +735,51 @@ export const find: {
 })
 
 /**
+ * Consumes an iterator, creating two Arrays from it
+ *
+ * The predicate passed to partition() can return true, or false.
+ * partition() returns a pair, all of the elements for which it returned
+ * true, and all of the elements for which it returned false.
+ *
+ * ## Example
+ * ```typescript
+ * const [even, odd] = await partition(e => e % 2 === 0, [1, 2, 3])
+ *
+ * expect(even).toEqual([2])
+ * expect(odd).toEqual([1, 3])
+ * ```
+ */
+export const partition: {
+  <T>(fn: (item: T) => boolean, iterator: AsyncIterableOrIterator<T>): Promise<
+    [Array<T>, Array<T>]
+  >
+  <T>(fn: (item: T) => boolean): (
+    iterator: AsyncIterableOrIterator<T>,
+  ) => Promise<[Array<T>, Array<T>]>
+} = curry(async function partition<T>(
+  fn: (item: T) => boolean,
+  iterator: AsyncIterableOrIterator<T>,
+): Promise<[Array<T>, Array<T>]> {
+  const passing: Array<T> = []
+  const failing: Array<T> = []
+
+  for await (const item of asIterable(iterator)) {
+    if (fn(item)) {
+      passing.push(item)
+    } else {
+      failing.push(item)
+    }
+  }
+
+  return [passing, failing]
+})
+
+/**
  * Returns the first value of the iterator or undefined if it's empty
  *
  * ## Example
  * ```typescript
- * first([1, 2, 3]) // 1
+ * await first([1, 2, 3]) // 1
  * ```
  */
 export const first: {
@@ -760,7 +800,7 @@ export const first: {
  *
  * ## Example
  * ```typescript
- * take(2, [1, 2, 3]) // [1, 2]
+ * await take(2, [1, 2, 3]) // [1, 2]
  * ```
  */
 export const take: {
@@ -821,7 +861,7 @@ export const takeUntil: {
  *
  * ## Example
  * ```typescript
- * last([1, 2, 3]) // 3
+ * await last([1, 2, 3]) // 3
  * ```
  */
 export const last: {
@@ -829,7 +869,7 @@ export const last: {
 } = async function first<T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<T | undefined> {
-  let lastItem
+  let lastItem: T | undefined
   for await (const item of asIterable(asyncIterator)) {
     lastItem = item
   }

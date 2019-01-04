@@ -543,6 +543,47 @@ export const find: {
 })
 
 /**
+ * Consumes an iterator, creating two Arrays from it
+ *
+ * The predicate passed to partition() can return true, or false.
+ * partition() returns a pair, all of the elements for which it returned
+ * true, and all of the elements for which it returned false.
+ *
+ * ## Example
+ * ```typescript
+ * const [even, odd] = partition(e => e % 2 === 0, [1, 2, 3])
+ *
+ * expect(even).toEqual([2])
+ * expect(odd).toEqual([1, 3])
+ * ```
+ */
+export const partition: {
+  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): [
+    Array<T>,
+    Array<T>
+  ]
+  <T>(fn: (item: T) => boolean): (
+    iterator: IterableOrIterator<T>,
+  ) => [Array<T>, Array<T>]
+} = curry(function partition<T>(
+  fn: (item: T) => boolean,
+  iterator: IterableOrIterator<T>,
+): [Array<T>, Array<T>] {
+  const passing: Array<T> = []
+  const failing: Array<T> = []
+
+  for (const item of asIterable(iterator)) {
+    if (fn(item)) {
+      passing.push(item)
+    } else {
+      failing.push(item)
+    }
+  }
+
+  return [passing, failing]
+})
+
+/**
  * Returns the first value of the iterator or undefined if it's empty
  *
  * ## Example

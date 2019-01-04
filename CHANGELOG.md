@@ -1,6 +1,6 @@
-# 1.0.2
+# 1.1.0
 
-- Add `scan`
+- Add `scan` and `partition`
 
 # 1.0.1
 

@@ -852,6 +852,27 @@ describe('async', () => {
     })
   })
 
+  describe('partition', () => {
+    it('should return a tuple of passing and failing elements', async () => {
+      const [even, odd] = await subject.partition(
+        item => item % 2 === 0,
+        asAsync(1, 2, 3, 4, 5),
+      )
+
+      expect(even).toEqual([2, 4])
+      expect(odd).toEqual([1, 3, 5])
+    })
+
+    it('should be auto curried', async () => {
+      const [even, odd] = await subject.partition(
+        (item: number) => item % 2 === 0,
+      )(asAsync(1, 2, 3))
+
+      expect(even).toEqual([2])
+      expect(odd).toEqual([1, 3])
+    })
+  })
+
   describe('first', () => {
     it('should return the first item', async () => {
       const item = await subject.first(asAsync('one', 'two', 'three'))

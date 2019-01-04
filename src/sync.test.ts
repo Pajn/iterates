@@ -653,6 +653,32 @@ describe('sync', () => {
     })
   })
 
+  describe('partition', () => {
+    it('should return a tuple of passing and failing elements', () => {
+      const [even, odd] = subject.partition(item => item % 2 === 0, [
+        1,
+        2,
+        3,
+        4,
+        5,
+      ])
+
+      expect(even).toEqual([2, 4])
+      expect(odd).toEqual([1, 3, 5])
+    })
+
+    it('should be auto curried', () => {
+      const [even, odd] = subject.partition((item: number) => item % 2 === 0)([
+        1,
+        2,
+        3,
+      ])
+
+      expect(even).toEqual([2])
+      expect(odd).toEqual([1, 3])
+    })
+  })
+
   describe('first', () => {
     it('should return the first item', () => {
       const item = subject.first(['one', 'two', 'three'])
