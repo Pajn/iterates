@@ -1,6 +1,7 @@
 # 1.1.0
 
 - Add `scan` and `partition`
+- Add pure annotations to output for better tree shaking
 
 # 1.0.1
 

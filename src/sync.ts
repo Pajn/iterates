@@ -1,5 +1,4 @@
-import curry from 'auto-curry'
-import {curry2WithOptions} from './utils'
+import {autoCurry, curry2, curry2WithOptions} from './utils'
 
 /**
  * Either an Iterable (for example an Array) or an Iterator
@@ -119,7 +118,7 @@ export const map: {
   <T, U>(fn: (item: T) => U): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<U>
-} = curry(function* map<T, U>(
+} = curry2(function* map<T, U>(
   fn: (item: T) => U,
   iterator: IterableOrIterator<T>,
 ) {
@@ -149,7 +148,7 @@ export const filterMap: {
   <T, U>(fn: (item: T) => U | undefined): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<U>
-} = curry(function* filterMap<T, U>(
+} = curry2(function* filterMap<T, U>(
   fn: (item: T) => U | undefined,
   iterator: IterableOrIterator<T>,
 ) {
@@ -177,7 +176,7 @@ export const flatMap: {
   <T, U>(fn: (item: T) => IterableOrIterator<U>): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<U>
-} = curry(function* flatMap<T, U>(
+} = curry2(function* flatMap<T, U>(
   fn: (item: T) => IterableOrIterator<U>,
   iterator: IterableOrIterator<T>,
 ) {
@@ -223,7 +222,7 @@ export const filter: {
   <T>(predicate: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<T>
-} = curry(function* filter<T>(
+} = curry2(function* filter<T>(
   predicate: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -257,7 +256,7 @@ export const fold: {
   <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
     iterator: IterableOrIterator<T>,
   ) => U
-} = curry(function fold<T, U>(
+} = autoCurry(function fold<T, U>(
   initialValue: U,
   combine: (previousItem: U, item: T) => U,
   iterator: IterableOrIterator<T>,
@@ -289,7 +288,7 @@ export const scan: {
   <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<U>
-} = curry(function* scan<T, U>(
+} = autoCurry(function* scan<T, U>(
   initialValue: U,
   combine: (previousItem: U, item: T) => U,
   iterator: IterableOrIterator<T>,
@@ -440,7 +439,7 @@ export const zip: {
   <A, B>(a: IterableOrIterator<A>): (
     b: IterableOrIterator<B>,
   ) => IterableIterator<[A, B]>
-} = curry(function* zip<A, B>(
+} = curry2(function* zip<A, B>(
   a: IterableOrIterator<A>,
   b: IterableOrIterator<B>,
 ): IterableIterator<[A, B]> {
@@ -474,7 +473,7 @@ export const zip: {
 export const all: {
   <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
   <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
-} = curry(function all<T>(
+} = curry2(function all<T>(
   fn: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): boolean {
@@ -503,7 +502,7 @@ export const all: {
 export const any: {
   <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
   <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
-} = curry(function any<T>(
+} = curry2(function any<T>(
   fn: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): boolean {
@@ -531,7 +530,7 @@ export const find: {
   <T>(fn: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
   ) => T | undefined
-} = curry(function find<T>(
+} = curry2(function find<T>(
   fn: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): T | undefined {
@@ -565,7 +564,7 @@ export const partition: {
   <T>(fn: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
   ) => [Array<T>, Array<T>]
-} = curry(function partition<T>(
+} = curry2(function partition<T>(
   fn: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): [Array<T>, Array<T>] {
@@ -614,7 +613,7 @@ export const first: {
 export const skip: {
   <T>(count: number, iterator: IterableOrIterator<T>): IterableIterator<T>
   <T>(count: number): (iterator: IterableOrIterator<T>) => IterableIterator<T>
-} = curry(function* skip<T>(
+} = curry2(function* skip<T>(
   count: number,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -647,7 +646,7 @@ export const skipWhile: {
   <T>(test: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<T>
-} = curry(function* skipWhile<T>(
+} = curry2(function* skipWhile<T>(
   test: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -675,7 +674,7 @@ export const skipWhile: {
 export const take: {
   <T>(count: number, iterator: IterableOrIterator<T>): IterableIterator<T>
   <T>(count: number): (iterator: IterableOrIterator<T>) => IterableIterator<T>
-} = curry(function* take<T>(
+} = curry2(function* take<T>(
   count: number,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -706,7 +705,7 @@ export const takeWhile: {
   <T>(test: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
   ) => IterableIterator<T>
-} = curry(function* takeWhile<T>(
+} = curry2(function* takeWhile<T>(
   test: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): IterableIterator<T> {
@@ -739,7 +738,7 @@ export const sort: {
   <T>(fn: (a: T, b: T) => Ordering): (
     iterator: IterableOrIterator<T>,
   ) => Array<T>
-} = curry(function sort<T>(
+} = curry2(function sort<T>(
   fn: (a: T, b: T) => Ordering,
   iterator: IterableOrIterator<T>,
 ): Array<T> {

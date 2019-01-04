@@ -1,3 +1,6 @@
+import {AsyncIterableOrIterator} from './async'
+import {IterableOrIterator} from './sync'
+
 /**
  * @internal
  */
@@ -12,6 +15,37 @@ const isIterableOrIterator = (iterator: any): boolean => {
 /**
  * @internal
  */
+export type Curry2<A, B, R> = {
+  (a: A, b: B): R
+  (a: A): (b: B) => R
+}
+/**
+ * @internal
+ */
+export const curry2 = <A, B, R>(func: (a: A, b: B) => R): Curry2<A, B, R> =>
+  ((a, b) => {
+    if (b === undefined) {
+      return ((b: B) => func(a, b)) as any
+    } else {
+      return func(a, b as B)
+    }
+  }) as any
+/**
+ * @internal
+ */
+export function autoCurry(fn: Function): any {
+  const args = Array.from(arguments)
+
+  if (fn.length <= 1) return fn
+  if (args.length - 1 >= fn.length) return fn.apply(this, args.slice(1))
+
+  return function() {
+    return autoCurry.apply(this, args.concat(Array.from(arguments)))
+  }
+}
+/**
+ * @internal
+ */
 export type Curry2WithOptions<A, I, O, R> = {
   (a: A, b: I, options?: O): R
   (a: A, options: O | undefined): (b: I) => R
@@ -20,7 +54,12 @@ export type Curry2WithOptions<A, I, O, R> = {
 /**
  * @internal
  */
-export const curry2WithOptions = <A, I, O, R>(
+export const curry2WithOptions = <
+  A,
+  I extends IterableOrIterator<any> | AsyncIterableOrIterator<any>,
+  O,
+  R
+>(
   func: (a: A, b: I, options?: O) => R,
 ): Curry2WithOptions<A, I, O, R> =>
   ((a, b, options) => {

@@ -1,7 +1,6 @@
-import curry from 'auto-curry'
 import {EventEmitter} from 'events'
 import {IterableOrIterator, asIterable as asSyncIterable} from './sync'
-import {curry2WithOptions} from './utils'
+import {autoCurry, curry2, curry2WithOptions} from './utils'
 
 if (Symbol.asyncIterator === undefined) {
   ;(Symbol as any).asyncIterator = Symbol()
@@ -245,7 +244,7 @@ export const map: {
   <T, U>(fn: (item: T) => Awaitable<U>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
-} = curry(async function* map<T, U>(
+} = curry2(async function* map<T, U>(
   fn: (item: T) => Awaitable<U>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<U> {
@@ -275,7 +274,7 @@ export const filterMap: {
   <T, U>(fn: (item: T) => Awaitable<U | undefined>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
-} = curry(async function* filterMap<T, U>(
+} = curry2(async function* filterMap<T, U>(
   fn: (item: T) => Awaitable<U | undefined>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<U> {
@@ -303,7 +302,7 @@ export const flatMap: {
   <T, U>(fn: (item: T) => AsyncIterableOrIterator<U>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
-} = curry(async function* flatMap<T, U>(
+} = curry2(async function* flatMap<T, U>(
   fn: (item: T) => AsyncIterableOrIterator<U>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<U> {
@@ -353,7 +352,7 @@ export const filter: {
   <T>(fn: (item: T) => boolean): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
-} = curry(async function* filter<T>(
+} = curry2(async function* filter<T>(
   fn: (item: T) => boolean,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<T> {
@@ -387,7 +386,7 @@ export const fold: {
   <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<U>
-} = curry(async function fold<T, U>(
+} = autoCurry(async function fold<T, U>(
   initialValue: U,
   combine: (previousItem: U, item: T) => U,
   asyncIterator: AsyncIterableOrIterator<T>,
@@ -419,7 +418,7 @@ export const scan: {
   <T, U>(initialValue: U, combine: (previousItem: U, item: T) => U): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<U>
-} = curry(async function* scan<T, U>(
+} = autoCurry(async function* scan<T, U>(
   initialValue: U,
   combine: (previousItem: U, item: T) => U,
   asyncIterator: AsyncIterableOrIterator<T>,
@@ -571,7 +570,7 @@ export const zip: {
   <A, B>(a: AsyncIterableOrIterator<A>): (
     b: AsyncIterableOrIterator<B>,
   ) => AsyncIterableIterator<[A, B]>
-} = curry(async function* zip<A, B>(
+} = curry2(async function* zip<A, B>(
   a: AsyncIterableOrIterator<A>,
   b: AsyncIterableOrIterator<B>,
 ): AsyncIterableIterator<[A, B]> {
@@ -614,7 +613,7 @@ export const throttle: {
   <T>(duration: number): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
-} = curry(async function* throttle<T>(
+} = curry2(async function* throttle<T>(
   duration: number,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<T> {
@@ -658,7 +657,7 @@ export const all: {
   <T>(fn: (item: T) => Awaitable<boolean>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<boolean>
-} = curry(async function all<T>(
+} = curry2(async function all<T>(
   fn: (item: T) => Awaitable<boolean>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<boolean> {
@@ -692,7 +691,7 @@ export const any: {
   <T>(fn: (item: T) => Awaitable<boolean>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<boolean>
-} = curry(async function any<T>(
+} = curry2(async function any<T>(
   fn: (item: T) => Awaitable<boolean>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<boolean> {
@@ -723,7 +722,7 @@ export const find: {
   <T>(fn: (item: T) => Awaitable<boolean>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<T | undefined>
-} = curry(async function find<T>(
+} = curry2(async function find<T>(
   fn: (item: T) => Awaitable<boolean>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<T | undefined> {
@@ -756,7 +755,7 @@ export const partition: {
   <T>(fn: (item: T) => boolean): (
     iterator: AsyncIterableOrIterator<T>,
   ) => Promise<[Array<T>, Array<T>]>
-} = curry(async function partition<T>(
+} = curry2(async function partition<T>(
   fn: (item: T) => boolean,
   iterator: AsyncIterableOrIterator<T>,
 ): Promise<[Array<T>, Array<T>]> {
@@ -811,7 +810,7 @@ export const take: {
   <T>(count: number): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
-} = curry(async function* find<T>(
+} = curry2(async function* find<T>(
   count: number,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<T> {
@@ -835,7 +834,7 @@ export const takeUntil: {
   <T>(notifier: AsyncIterableOrIterator<any>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
-} = curry(async function* find<T>(
+} = curry2(async function* find<T>(
   notifier: AsyncIterableOrIterator<any>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<T> {

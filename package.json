@@ -16,11 +16,12 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.1.5",
-    "auto-curry": "^0.2.1"
+    "@babel/runtime": "^7.1.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@types/jest": "^23.3.10",
+    "babel-plugin-annotate-pure-calls": "^0.4.0",
     "coveralls": "^2.13.1",
     "prettier": "^1.15.3",
     "tscomp": "^1.0.0-beta.10",
@@ -34,11 +35,13 @@
     "mode": "lib"
   },
   "scripts": {
-    "build": "tscomp build",
+    "build": "yarn build:src && yarn build:mark-pure",
+    "build:src": "tscomp build",
+    "build:mark-pure": "babel --plugins annotate-pure-calls lib/* -d lib",
     "test": "tscomp test",
     "eject": "tscomp eject",
     "watch": "tscomp watch",
-    "prepack": "tscomp build",
+    "prepack": "yarn build",
     "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
     "report-coverage": "cat coverage/lcov.info | coveralls"
   },
