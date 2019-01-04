@@ -1,7 +1,7 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "1.0.1",
+  "version": "1.1.0-beta",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": {
     "type": "git",
