@@ -1,7 +1,7 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "1.1.0-beta",
+  "version": "1.2.1",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": {
     "type": "git",
@@ -16,28 +16,26 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.1.5"
+    "@babel/runtime": "^7.1.5",
+    "@types/node": "^13.7.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@types/jest": "^23.3.10",
-    "babel-plugin-annotate-pure-calls": "^0.4.0",
-    "coveralls": "^2.13.1",
-    "prettier": "^1.15.3",
-    "tscomp": "^1.0.0-beta.10",
+    "@babel/cli": "^7.8.4",
+    "@types/jest": "^25.1.1",
+    "coveralls": "^2.13.3",
+    "prettier": "^1.19.1",
     "tslint": "^5.11.0",
     "tslint-config-pajn": "^1.0.0"
   },
   "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "8.0.5"
   },
   "tscomp": {
     "mode": "lib"
   },
   "scripts": {
-    "build": "yarn build:src && yarn build:mark-pure",
-    "build:src": "tscomp build",
-    "build:mark-pure": "babel --plugins annotate-pure-calls lib/* -d lib",
+    "build": "./node_modules/tsmodule/bin/tsmodule.js build",
     "test": "tscomp test",
     "eject": "tscomp eject",
     "watch": "tscomp watch",
