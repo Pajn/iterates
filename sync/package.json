@@ -1,0 +1,5 @@
+{
+  "main": "../cjs/sync.js",
+  "module": "../lib/sync.js",
+  "typings": "../lib/sync.d.ts"
+}

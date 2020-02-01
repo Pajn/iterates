@@ -1,3 +1,11 @@
+# 1.2.1
+
+- Also link typings file from sub-packages
+
+# 1.2.0
+
+- Add support for automatic resolution of ESM or CJS import
+
 # 1.1.0
 
 - Add `scan` and `partition`

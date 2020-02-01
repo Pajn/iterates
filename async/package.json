@@ -1,0 +1,5 @@
+{
+  "main": "../cjs/async.js",
+  "module": "../lib/async.js",
+  "typings": "../lib/async.d.ts"
+}
