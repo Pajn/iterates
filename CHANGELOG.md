@@ -1,3 +1,7 @@
+# 1.2.2
+
+- Fix missing js files in cjs and missing map files in lib
+
 # 1.2.1
 
 - Also link typings file from sub-packages
