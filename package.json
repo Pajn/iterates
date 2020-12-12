@@ -1,7 +1,7 @@
 {
   "name": "iterates",
   "description": "Iterator and AsyncIterator helper functions with typings",
-  "version": "1.2.2",
+  "version": "2.0.0-beta.1",
   "author": "Rasmus Eneman <rasmus@eneman.eu>",
   "repository": {
     "type": "git",
@@ -15,36 +15,33 @@
     "typescript"
   ],
   "sideEffects": false,
-  "dependencies": {
-    "@babel/runtime": "^7.1.5",
-    "@types/node": "^13.7.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@types/jest": "^25.1.1",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
+    "@types/jest": "^26.0.19",
+    "babel-jest": "^26.6.3",
     "coveralls": "^2.13.3",
+    "jest": "^26.6.3",
     "prettier": "^1.19.1",
+    "ts-node": "^9.1.1",
     "tslint": "^5.11.0",
-    "tslint-config-pajn": "^1.0.0"
-  },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "8.0.5"
-  },
-  "tscomp": {
-    "mode": "lib"
+    "tslint-config-pajn": "^1.0.0",
+    "typescript": "^4.1.3"
   },
   "scripts": {
-    "build": "./node_modules/tsmodule/bin/tsmodule.js build",
-    "test": "tscomp test",
-    "eject": "tscomp eject",
-    "watch": "tscomp watch",
+    "build": "yarn build::esm && yarn build::cjs",
+    "build::esm": "tsc",
+    "build::cjs": "tsc --module commonjs --outDir cjs",
+    "test": "jest",
     "prepack": "yarn build",
     "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
     "report-coverage": "cat coverage/lcov.info | coveralls"
   },
   "main": "./cjs/index.js",
   "module": "./lib/index.js",
+  "export": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "license": "BSD-3-Clause"
 }
