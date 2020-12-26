@@ -1,3 +1,9 @@
+# 2.0.0
+
+- Require an enivronment that supports `for await` natively. This should
+  be all evergreen browsers and node version >= 10
+- The shorthand imports `iterates/sync` and `iterates/async` require node version >= 12.7
+
 # 1.2.2
 
 - Fix missing js files in cjs and missing map files in lib

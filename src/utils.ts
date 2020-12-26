@@ -1,10 +1,10 @@
-import {AsyncIterableOrIterator} from './async'
-import {IterableOrIterator} from './sync'
+import type {AsyncIterableOrIterator} from './async.js'
+import type {IterableOrIterator} from './sync.js'
 
 /**
  * @internal
  */
-const isIterableOrIterator = (iterator: any): boolean => {
+const isIterableOrIterator = (iterator: any): iterator is IterableOrIterator<unknown> | AsyncIterableOrIterator<unknown> => {
   return (
     iterator != null &&
     (typeof iterator[Symbol.iterator] === 'function' ||
@@ -23,24 +23,24 @@ export type Curry2<A, B, R> = {
  * @internal
  */
 export const curry2 = <A, B, R>(func: (a: A, b: B) => R): Curry2<A, B, R> =>
-  ((a, b) => {
+  ((a: A, b?: B) => {
     if (b === undefined) {
-      return ((b: B) => func(a, b)) as any
+      return (b: B) => func(a, b)
     } else {
-      return func(a, b as B)
+      return func(a, b)
     }
   }) as any
 /**
  * @internal
  */
-export function autoCurry(fn: Function): any {
+export function autoCurry(this: unknown, fn: Function): any {
   const args = Array.from(arguments)
 
   if (fn.length <= 1) return fn
   if (args.length - 1 >= fn.length) return fn.apply(this, args.slice(1))
 
-  return function() {
-    return autoCurry.apply(this, args.concat(Array.from(arguments)))
+  return function(this: unknown) {
+    return autoCurry.apply(this, args.concat(Array.from(arguments)) as any)
   }
 }
 /**
@@ -62,7 +62,7 @@ export const curry2WithOptions = <
 >(
   func: (a: A, b: I, options?: O) => R,
 ): Curry2WithOptions<A, I, O, R> =>
-  ((a, b, options) => {
+  ((a: A, b?: I, options?: O) => {
     if (options === undefined) {
       if (b === undefined) {
         return ((b: I, options?: O) => func(a, b, options)) as any
@@ -75,7 +75,7 @@ export const curry2WithOptions = <
         }
       }
     } else {
-      return func(a, b, options)
+      return func(a, b!, options)
     }
   }) as any
 
@@ -824,7 +824,7 @@ export function tuple<A, B, C, D, E, F, G, H, I>(
  * const isTuple = tuple(['hello', 42]) // isTuple has type [string, number]
  * ```
  */
-export function tuple(items) {
+export function tuple(items: Array<any>) {
   return items
 }
 

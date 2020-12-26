@@ -1,4 +1,4 @@
-import {autoCurry, curry2, curry2WithOptions} from './utils'
+import {autoCurry, curry2, curry2WithOptions} from './utils.js'
 
 /**
  * Either an Iterable (for example an Array) or an Iterator
@@ -7,14 +7,19 @@ import {autoCurry, curry2, curry2WithOptions} from './utils'
 export type IterableOrIterator<T> = Iterable<T> | Iterator<T>
 export type Ordering = number
 
+/** @internal */
+export const isIterator = (iterator: any): iterator is Iterator<unknown> => {
+  return typeof iterator[Symbol.iterator] === 'undefined'
+}
+
 /**
  * @internal
  */
 export const asIterable = <T>(iterator: IterableOrIterator<T>): Iterable<T> => {
-  if (typeof iterator[Symbol.iterator] === 'undefined') {
-    return {[Symbol.iterator]: () => iterator as Iterator<T>}
+  if (isIterator(iterator)) {
+    return {[Symbol.iterator]: () => iterator}
   } else {
-    return iterator as Iterable<T>
+    return iterator
   }
 }
 /**
@@ -81,12 +86,7 @@ export function* range({
  * // [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]
  * ```
  */
-export const enumerate: {
-  <T>(iterator: IterableOrIterator<T>): IterableIterator<{
-    index: number
-    item: T
-  }>
-} = function enumerate<T>(
+export function enumerate<T>(
   iterator: IterableOrIterator<T>,
 ): IterableIterator<{
   index: number
@@ -195,9 +195,9 @@ export const flatMap: {
  * [...flatten([[1, 2], [], [3]])] // [1, 2, 3]
  * ```
  */
-export const flatten: {
-  <T>(iterator: IterableOrIterator<IterableOrIterator<T>>): IterableIterator<T>
-} = function* flatten<T>(iterator: IterableOrIterator<IterableOrIterator<T>>) {
+export function* flatten<T>(
+  iterator: IterableOrIterator<IterableOrIterator<T>>,
+): IterableIterator<T> {
   for (const item of asIterable(iterator)) {
     for (const innerItem of asIterable(item)) {
       yield innerItem
@@ -459,7 +459,7 @@ export const zip: {
 })
 
 /**
- * Returns true if fn returns true for every item in the iterator
+ * Returns true if predicate returns true for every item in the iterator
  *
  * Returns true if the iterator is empty
  *
@@ -471,14 +471,16 @@ export const zip: {
  * ```
  */
 export const all: {
-  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
-  <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
+  <T>(predicate: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
+  <T>(predicate: (item: T) => boolean): (
+    iterator: IterableOrIterator<T>,
+  ) => boolean
 } = curry2(function all<T>(
-  fn: (item: T) => boolean,
+  predicate: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): boolean {
   for (const item of asIterable(iterator)) {
-    if (!fn(item)) {
+    if (!predicate(item)) {
       return false
     }
   }
@@ -487,7 +489,7 @@ export const all: {
 })
 
 /**
- * Returns true if fn returns true for any item in the iterator
+ * Returns true if predicate returns true for any item in the iterator
  *
  * Returns false if the iterator is empty
  *
@@ -500,14 +502,16 @@ export const all: {
  */
 // tslint:disable-next-line:variable-name
 export const any: {
-  <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
-  <T>(fn: (item: T) => boolean): (iterator: IterableOrIterator<T>) => boolean
+  <T>(predicate: (item: T) => boolean, iterator: IterableOrIterator<T>): boolean
+  <T>(predicate: (item: T) => boolean): (
+    iterator: IterableOrIterator<T>,
+  ) => boolean
 } = curry2(function any<T>(
-  fn: (item: T) => boolean,
+  predicate: (item: T) => boolean,
   iterator: IterableOrIterator<T>,
 ): boolean {
   for (const item of asIterable(iterator)) {
-    if (fn(item)) {
+    if (predicate(item)) {
       return true
     }
   }
@@ -559,7 +563,7 @@ export const find: {
 export const partition: {
   <T>(fn: (item: T) => boolean, iterator: IterableOrIterator<T>): [
     Array<T>,
-    Array<T>
+    Array<T>,
   ]
   <T>(fn: (item: T) => boolean): (
     iterator: IterableOrIterator<T>,
@@ -590,9 +594,7 @@ export const partition: {
  * first([1, 2, 3]) // 1
  * ```
  */
-export const first: {
-  <T>(iterator: IterableOrIterator<T>): T | undefined
-} = function first<T>(iterator: IterableOrIterator<T>): T | undefined {
+export function first<T>(iterator: IterableOrIterator<T>): T | undefined {
   for (const item of asIterable(iterator)) {
     return item
   }
@@ -723,9 +725,7 @@ export const takeWhile: {
  * last([1, 2, 3]) // 3
  * ```
  */
-export const last: {
-  <T>(iterator: IterableOrIterator<T>): T | undefined
-} = function first<T>(iterator: IterableOrIterator<T>): T | undefined {
+export function last<T>(iterator: IterableOrIterator<T>): T | undefined {
   let lastItem
   for (const item of asIterable(iterator)) {
     lastItem = item

@@ -1,5 +1,0 @@
-{
-  "main": "../cjs/utils.js",
-  "module": "../lib/utils.js",
-  "typings": "../lib/utils.d.ts"
-}

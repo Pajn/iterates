@@ -1,4 +1,5 @@
-import {pipeValue, sync} from '.'
+import * as sync from './sync.js'
+import {pipeValue} from './utils.js'
 
 describe('utils', () => {
   describe('pipeValue', () => {
@@ -11,7 +12,13 @@ describe('utils', () => {
         sync.collect(({index, item}) => [index, item]),
       )
 
-      expect(result).toEqual(new Map([[0, [0]], [1, [0, 1]], [2, [0, 1, 2]]]))
+      expect(result).toEqual(
+        new Map([
+          [0, [0]],
+          [1, [0, 1]],
+          [2, [0, 1, 2]],
+        ]),
+      )
     })
   })
 })

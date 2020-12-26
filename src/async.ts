@@ -1,6 +1,5 @@
-import {EventEmitter} from 'events'
-import {IterableOrIterator, asIterable as asSyncIterable} from './sync'
-import {autoCurry, curry2, curry2WithOptions} from './utils'
+import {IterableOrIterator, asIterable as asSyncIterable} from './sync.js'
+import {autoCurry, curry2, curry2WithOptions} from './utils.js'
 
 if (Symbol.asyncIterator === undefined) {
   ;(Symbol as any).asyncIterator = Symbol()
@@ -19,10 +18,17 @@ export type AnyIterableOrIterator<T> =
   | AsyncIterableOrIterator<T>
 
 /** @internal */
+export const isIterator = (
+  iterator: any,
+): iterator is AsyncIterator<unknown> => {
+  return typeof iterator[Symbol.asyncIterator] === 'undefined'
+}
+
+/** @internal */
 export const asIterable = <T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterable<T> => {
-  if (typeof asyncIterator[Symbol.asyncIterator] === 'undefined') {
+  if (isIterator(asyncIterator)) {
     return {[Symbol.asyncIterator]: () => asyncIterator as AsyncIterator<T>}
   } else {
     return asyncIterator as AsyncIterable<T>
@@ -61,7 +67,7 @@ export async function* fromPromise<T>(
 
 class Subscriber<T, E> {
   items: Array<{done: boolean; isError: boolean; value?: T; error?: E}> = []
-  eventEmitter = new EventEmitter()
+  onValue = () => {}
   iterator: AsyncIterator<T>
 
   constructor(private dispose: () => void) {
@@ -80,14 +86,14 @@ class Subscriber<T, E> {
             return
           }
 
-          this.eventEmitter.once('value', () => {
+          this.onValue = () => {
             const item = this.items.shift()!
             if (item.isError) {
               reject(item.error)
             } else {
               resolve({done: item.done, value: item.value!})
             }
-          })
+          }
         }))
       },
     }
@@ -95,17 +101,17 @@ class Subscriber<T, E> {
 
   pushNext(item: T) {
     this.items.push({done: false, isError: false, value: item})
-    this.eventEmitter.emit('value')
+    this.onValue()
   }
   pushThrow(error: E) {
     this.items.push({done: false, isError: true, error})
     this.dispose()
-    this.eventEmitter.emit('value')
+    this.onValue()
   }
   done() {
     this.items.push({done: true, isError: false})
     this.dispose()
-    this.eventEmitter.emit('value')
+    this.onValue()
   }
 }
 
@@ -127,7 +133,7 @@ export interface ISubject<T, E = any> extends AsyncIterable<T> {
 }
 
 /**
- * A Subject is an AsyncIterable wich yields values that are pushed to the Subject.
+ * A Subject is an AsyncIterable which yields values that are pushed to the Subject.
  *
  * The Subject can be seen as an EventEmitter, allowing a producer to
  * push values to one or more consumers
@@ -206,12 +212,7 @@ export class Subject<T, E = any> implements ISubject<T, E> {
  * // [{index: 0, item: 'a'}, {index: 1, item: 'b'}, {index: 2, item: 'c'}]
  * ```
  */
-export const enumerate: {
-  <T>(asyncIterator: AsyncIterableOrIterator<T>): AsyncIterableIterator<{
-    index: number
-    item: T
-  }>
-} = function enumerate<T>(
+export function enumerate<T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): AsyncIterableIterator<{
   index: number
@@ -638,7 +639,7 @@ export const throttle: {
 })
 
 /**
- * Returns true if fn returns true for every item in the iterator
+ * Returns true if predicate returns true for every item in the iterator
  *
  * Returns true if the iterator is empty
  *
@@ -651,18 +652,18 @@ export const throttle: {
  */
 export const all: {
   <T>(
-    fn: (item: T) => Awaitable<boolean>,
+    predicate: (item: T) => Awaitable<boolean>,
     asyncIterator: AsyncIterableOrIterator<T>,
   ): Promise<boolean>
-  <T>(fn: (item: T) => Awaitable<boolean>): (
+  <T>(predicate: (item: T) => Awaitable<boolean>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<boolean>
 } = curry2(async function all<T>(
-  fn: (item: T) => Awaitable<boolean>,
+  predicate: (item: T) => Awaitable<boolean>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<boolean> {
   for await (const item of asIterable(asyncIterator)) {
-    if (!(await fn(item))) {
+    if (!(await predicate(item))) {
       return false
     }
   }
@@ -671,7 +672,7 @@ export const all: {
 })
 
 /**
- * Returns true if fn returns true for any item in the iterator
+ * Returns true if predicate returns true for any item in the iterator
  *
  * Returns false if the iterator is empty
  *
@@ -685,18 +686,18 @@ export const all: {
 // tslint:disable-next-line:variable-name
 export const any: {
   <T>(
-    fn: (item: T) => Awaitable<boolean>,
+    predicate: (item: T) => Awaitable<boolean>,
     asyncIterator: AsyncIterableOrIterator<T>,
   ): Promise<boolean>
-  <T>(fn: (item: T) => Awaitable<boolean>): (
+  <T>(predicate: (item: T) => Awaitable<boolean>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => Promise<boolean>
 } = curry2(async function any<T>(
-  fn: (item: T) => Awaitable<boolean>,
+  predicate: (item: T) => Awaitable<boolean>,
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<boolean> {
   for await (const item of asIterable(asyncIterator)) {
-    if (await fn(item)) {
+    if (await predicate(item)) {
       return true
     }
   }
@@ -781,9 +782,7 @@ export const partition: {
  * await first([1, 2, 3]) // 1
  * ```
  */
-export const first: {
-  <T>(asyncIterator: AsyncIterableOrIterator<T>): Promise<T | undefined>
-} = async function first<T>(
+export async function first<T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<T | undefined> {
   for await (const item of asIterable(asyncIterator)) {
@@ -830,7 +829,7 @@ export const takeUntil: {
   <T>(
     notifier: AsyncIterableOrIterator<any>,
     asyncIterator: AsyncIterableOrIterator<T>,
-  ): AsyncIterableOrIterator<T>
+  ): AsyncIterableIterator<T>
   <T>(notifier: AsyncIterableOrIterator<any>): (
     asyncIterator: AsyncIterableOrIterator<T>,
   ) => AsyncIterableIterator<T>
@@ -863,9 +862,7 @@ export const takeUntil: {
  * await last([1, 2, 3]) // 3
  * ```
  */
-export const last: {
-  <T>(asyncIterator: AsyncIterableOrIterator<T>): Promise<T | undefined>
-} = async function first<T>(
+export async function last<T>(
   asyncIterator: AsyncIterableOrIterator<T>,
 ): Promise<T | undefined> {
   let lastItem: T | undefined

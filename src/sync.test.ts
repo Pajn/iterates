@@ -1,5 +1,5 @@
-import {tuple} from '.'
-import * as subject from './sync'
+import * as subject from './sync.js'
+import {tuple} from './utils.js'
 
 describe('sync', () => {
   describe('asArray', () => {
@@ -260,7 +260,11 @@ describe('sync', () => {
   describe('flatten', () => {
     it('should apply flatten the items', () => {
       const iterator = subject
-        .flatten([[1, 'one'], [2, 'two'], [3, 'three']])
+        .flatten([
+          [1, 'one'],
+          [2, 'two'],
+          [3, 'three'],
+        ])
         [Symbol.iterator]()
 
       expect(iterator.next()).toEqual({
@@ -370,11 +374,10 @@ describe('sync', () => {
     })
 
     it('should be auto curried', () => {
-      const iterator = subject.scan(0, (sum, item: number) => sum + item)([
-        1,
-        2,
-        3,
-      ])
+      const iterator = subject.scan(
+        0,
+        (sum, item: number) => sum + item,
+      )([1, 2, 3])
 
       expect(iterator.next()).toEqual({
         done: false,
@@ -386,26 +389,48 @@ describe('sync', () => {
   describe('collect', () => {
     it('should collect the values of the iterator in a map', () => {
       const map = subject.collect(item => [item, item ** 2], [1, 2, 3])
-      expect(map).toEqual(new Map([[1, 1], [2, 4], [3, 9]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [2, 4],
+          [3, 9],
+        ]),
+      )
     })
 
     it('should overwrite duplicate keys', () => {
       const map = subject.collect(item => [item ** 2, item], [1, 2, 3, -2])
-      expect(map).toEqual(new Map([[1, 1], [4, -2], [9, 3]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [4, -2],
+          [9, 3],
+        ]),
+      )
     })
 
     it('should support a custom merge function', () => {
       const map = subject.collect(item => [item ** 2, item], [1, 2, 3, -2], {
         merge: (a, b) => a + b,
       })
-      expect(map).toEqual(new Map([[1, 1], [4, 0], [9, 3]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [4, 0],
+          [9, 3],
+        ]),
+      )
     })
 
     it('should be auto curried', () => {
       const collectFn = (item: number) => tuple([item ** 2, item])
       const values = [1, 2, 3, -2]
-      const options = {merge: (a, b) => a + b}
-      const result = new Map([[1, 1], [4, 0], [9, 3]])
+      const options = {merge: (a: number, b: number) => a + b}
+      const result = new Map([
+        [1, 1],
+        [4, 0],
+        [9, 3],
+      ])
 
       const map1 = subject.collect(collectFn, values, options)
       expect(map1).toEqual(result)
@@ -452,7 +477,7 @@ describe('sync', () => {
     it('should be auto curried', () => {
       const collectFn = (item: number) => tuple([`${item ** 2}`, item])
       const values = [1, 2, 3, -2]
-      const options = {merge: (a, b) => a + b}
+      const options = {merge: (a: number, b: number) => a + b}
       const result = {1: 1, 4: 0, 9: 3}
 
       const map1 = subject.collectRecord(collectFn, values, options)

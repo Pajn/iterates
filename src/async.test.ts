@@ -1,6 +1,6 @@
-import {tuple} from '.'
-import * as subject from './async'
-import {Awaitable} from './async'
+import * as subject from './async.js'
+import {Awaitable} from './async.js'
+import {tuple} from './utils.js'
 
 if (typeof Symbol.asyncIterator === 'undefined') {
   ;(Symbol as any).asyncIterator = Symbol()
@@ -448,9 +448,10 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const item = await subject.fold(0, (sum, item: number) => sum + item)(
-        asAsync(1, 2, 3),
-      )
+      const item = await subject.fold(
+        0,
+        (sum, item: number) => sum + item,
+      )(asAsync(1, 2, 3))
 
       expect(item).toEqual(6)
     })
@@ -486,9 +487,10 @@ describe('async', () => {
     })
 
     it('should be auto curried', async () => {
-      const iterator = subject.scan(0, (sum, item: number) => sum + item)(
-        asAsync(1, 2, 3),
-      )
+      const iterator = subject.scan(
+        0,
+        (sum, item: number) => sum + item,
+      )(asAsync(1, 2, 3))
 
       expect(await iterator.next()).toEqual({
         done: false,
@@ -503,7 +505,13 @@ describe('async', () => {
         item => [item, item ** 2],
         asAsync(1, 2, 3),
       )
-      expect(map).toEqual(new Map([[1, 1], [2, 4], [3, 9]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [2, 4],
+          [3, 9],
+        ]),
+      )
     })
 
     it('should overwrite duplicate keys', async () => {
@@ -511,7 +519,13 @@ describe('async', () => {
         item => [item ** 2, item],
         asAsync(1, 2, 3, -2),
       )
-      expect(map).toEqual(new Map([[1, 1], [4, -2], [9, 3]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [4, -2],
+          [9, 3],
+        ]),
+      )
     })
 
     it('should support a custom merge function', async () => {
@@ -522,14 +536,24 @@ describe('async', () => {
           merge: (a, b) => a + b,
         },
       )
-      expect(map).toEqual(new Map([[1, 1], [4, 0], [9, 3]]))
+      expect(map).toEqual(
+        new Map([
+          [1, 1],
+          [4, 0],
+          [9, 3],
+        ]),
+      )
     })
 
     it('should be auto curried', async () => {
       const collectFn = (item: number) => tuple([item ** 2, item])
       const values = () => asAsync(1, 2, 3, -2)
-      const options = {merge: (a, b) => a + b}
-      const result = new Map([[1, 1], [4, 0], [9, 3]])
+      const options = {merge: (a: number, b: number) => a + b}
+      const result = new Map([
+        [1, 1],
+        [4, 0],
+        [9, 3],
+      ])
 
       const map1 = await subject.collect(collectFn, values(), options)
       expect(map1).toEqual(result)
@@ -573,7 +597,7 @@ describe('async', () => {
     it('should be auto curried', async () => {
       const collectFn = (item: number) => tuple([`${item ** 2}`, item])
       const values = () => asAsync(1, 2, 3, -2)
-      const options = {merge: (a, b) => a + b}
+      const options = {merge: (a: number, b: number) => a + b}
       const result = {1: 1, 4: 0, 9: 3}
 
       const map1 = await subject.collectRecord(collectFn, values(), options)

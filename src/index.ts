@@ -1,6 +1,6 @@
-import * as async from './async'
-import * as sync from './sync'
+import * as async from './async.js'
+import * as sync from './sync.js'
 
-export {collectEntry, pipeValue, tuple} from './utils'
+export {collectEntry, pipeValue, tuple} from './utils.js'
 
 export {async, sync}
